@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivero Vancho — Vivero de barrio en Moreno, hace más de 50 años</title>
+<meta name="description" content="Vivero Vancho: plantas, tierra y sustratos, macetas, muebles de exterior, decoración de jardín, camping, acuario y piscinas. Bv. Juan Domingo Perón 1232, Moreno, Buenos Aires. Más de 50 años en el barrio.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Sprite de íconos: SVG propio en vez de emoji, para que se vea igual en
+     cualquier sistema (algunos emoji nuevos no tienen glifo en Windows). -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="icon-sprout" viewBox="0 0 24 24"><path d="M12 2C7 6 6 13 12 22C18 13 17 6 12 2Z"/></symbol>
+    <symbol id="icon-soil" viewBox="0 0 24 24"><path d="M2 20C4 12 8 8 12 8C16 8 20 12 22 20Z"/><circle cx="9" cy="17" r="1.2" fill="#F3ECDD"/><circle cx="15" cy="15.5" r="1.2" fill="#F3ECDD"/></symbol>
+    <symbol id="icon-spray" viewBox="0 0 24 24"><rect x="7" y="2" width="6" height="3" rx="1"/><rect x="9" y="4.5" width="2" height="5.5"/><rect x="6" y="10" width="10" height="12" rx="2"/></symbol>
+    <symbol id="icon-pot" viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="4" rx="2"/><path d="M6.5 11H17.5L15.5 22H8.5Z"/></symbol>
+    <symbol id="icon-chair" viewBox="0 0 24 24"><rect x="5" y="3" width="3" height="14" rx="1"/><rect x="5" y="13" width="14" height="3" rx="1"/><rect x="6" y="16" width="2.5" height="6" rx="1"/><rect x="15.5" y="16" width="2.5" height="6" rx="1"/></symbol>
+    <symbol id="icon-statue" viewBox="0 0 24 24"><circle cx="12" cy="6" r="3.2"/><path d="M7 10H17L18.5 22H5.5Z"/></symbol>
+    <symbol id="icon-tent" viewBox="0 0 24 24"><path d="M12 3L21 20H3Z"/><path d="M12 15L14.5 20H9.5Z" fill="#F3ECDD"/><rect x="2" y="19" width="20" height="1.6" rx="0.8"/></symbol>
+    <symbol id="icon-fish" viewBox="0 0 24 24"><ellipse cx="10" cy="12" rx="7.5" ry="5"/><path d="M17 12L22.5 7V17Z"/><circle cx="6.8" cy="10.2" r="1.1" fill="#F3ECDD"/></symbol>
+    <symbol id="icon-waves" viewBox="0 0 24 24"><path d="M1 8c2.2-2.4 4.4-2.4 6.6 0s4.4 2.4 6.6 0 4.4-2.4 6.6 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M1 15c2.2-2.4 4.4-2.4 6.6 0s4.4 2.4 6.6 0 4.4-2.4 6.6 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Z"/><circle cx="12" cy="9" r="2.6" fill="#F3ECDD"/></symbol>
+    <symbol id="icon-camera" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="15" rx="4"/><rect x="8" y="3" width="8" height="3.5" rx="1"/><circle cx="12" cy="13.5" r="4.2" fill="#F3ECDD"/><circle cx="12" cy="13.5" r="2.2"/><circle cx="18" cy="9.3" r="1" fill="#F3ECDD"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="M9 4L17 12L9 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" href="#inicio">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="48" fill="#F3ECDD"/>
+        <path d="M40,70 L60,70 L64,90 L36,90 Z" fill="#C1622E"/>
+        <rect x="34" y="66" width="32" height="7" rx="3.5" fill="#A94F24"/>
+        <path d="M50,68 C45,52 45,30 50,14 C55,30 55,52 50,68 Z" fill="#3E7A45"/>
+        <path d="M50,68 C39,59 29,45 23,29 C35,32 45,46 50,68 Z" fill="#6FA76B"/>
+        <path d="M50,68 C61,59 71,45 77,29 C65,32 55,46 50,68 Z" fill="#2C5A32"/>
+      </svg>
+      <span class="logo-text">Vivero Vancho<span>Más de 50 años en el barrio</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menú</button>
+    <nav>
+      <ul class="nav-menu" id="nav-menu" data-nav-menu>
+        <li><a href="#rubros">Rubros</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <!-- =========================== HERO =========================== -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <span class="kicker-badge"><svg class="icon"><use href="#icon-sprout"></use></svg> Vivero de barrio en Moreno</span>
+        <h1>Tu vivero de siempre, con más de 50 años cuidando el barrio.</h1>
+        <p>Plantas, tierra, macetas y todo lo que necesitás para tu jardín o tu
+          balcón — atendido por la misma familia desde hace más de 50 años,
+          en Bv. Juan Domingo Perón 1232.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#rubros">Ver nuestros rubros</a>
+          <a class="btn btn-secondary" href="#ubicacion">Cómo llegar</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="assets/hero/vivero-jardin.jpg" alt="Jardín del vivero con macetas de rosas en flor, bajo una palmera" width="890" height="825" loading="eager">
+        <p>Vivero Vancho — Moreno, Buenos Aires</p>
+      </div>
+    </div>
+
+    <!-- Enredaderas decorativas: crecen con el scroll (ver initHeroVines en
+         main.js). Solo en pantallas anchas, donde hay margen fuera del
+         container para que no invadan el texto. -->
+    <div class="hero-vine hero-vine-left" aria-hidden="true">
+      <svg viewBox="0 0 60 300" preserveAspectRatio="none">
+        <path class="vine-stem" d="M22,300 C40,270 6,245 26,215 C44,185 6,160 26,130 C44,100 8,70 24,40 C36,20 12,8 20,0" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+        <g class="vine-leaf" data-threshold="0.15" transform="translate(30,240) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
+        <g class="vine-leaf" data-threshold="0.32" transform="translate(14,180) rotate(35)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
+        <g class="vine-leaf" data-threshold="0.48" transform="translate(32,130) rotate(-25)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
+        <g class="vine-leaf" data-threshold="0.62" transform="translate(10,85) rotate(30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
+        <g class="vine-leaf" data-threshold="0.75" transform="translate(28,45) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
+        <g class="vine-flower" data-threshold="0.88" transform="translate(20,14)">
+          <circle cx="-6" cy="-3" r="3.4" fill="var(--terracota)"/>
+          <circle cx="6" cy="-3" r="3.4" fill="var(--terracota)"/>
+          <circle cx="0" cy="-7" r="3.4" fill="var(--terracota)"/>
+          <circle cx="0" cy="0" r="3.4" fill="var(--terracota)"/>
+          <circle cx="0" cy="-2" r="1.8" fill="#FBE9A8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-vine hero-vine-right" aria-hidden="true">
+      <svg viewBox="0 0 60 300" preserveAspectRatio="none">
+        <path class="vine-stem" d="M22,300 C40,270 6,245 26,215 C44,185 6,160 26,130 C44,100 8,70 24,40 C36,20 12,8 20,0" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+        <g class="vine-leaf" data-threshold="0.15" transform="translate(30,240) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
+        <g class="vine-leaf" data-threshold="0.32" transform="translate(14,180) rotate(35)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
+        <g class="vine-leaf" data-threshold="0.48" transform="translate(32,130) rotate(-25)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
+        <g class="vine-leaf" data-threshold="0.62" transform="translate(10,85) rotate(30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
+        <g class="vine-leaf" data-threshold="0.75" transform="translate(28,45) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
+        <g class="vine-flower" data-threshold="0.88" transform="translate(20,14)">
+          <circle cx="-6" cy="-3" r="3.4" fill="var(--terracota)"/>
+          <circle cx="6" cy="-3" r="3.4" fill="var(--terracota)"/>
+          <circle cx="0" cy="-7" r="3.4" fill="var(--terracota)"/>
+          <circle cx="0" cy="0" r="3.4" fill="var(--terracota)"/>
+          <circle cx="0" cy="-2" r="1.8" fill="#FBE9A8"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="var(--sage-deep)"/></svg>
+    </div>
+  </section>
+
+  <!-- =========================== RUBROS =========================== -->
+  <section id="rubros" class="section section--no-top-border">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">// nuestros rubros</p>
+        <h2>Todo lo que necesita tu espacio verde</h2>
+        <p class="lead">La variedad de un vivero grande, con la atención de un negocio de barrio.</p>
+      </div>
+      <div class="rubros-carousel" data-rubros-carousel>
+        <div class="rubros-spotlight" data-rubros-spotlight>
+          <button type="button" class="rubros-nav rubros-nav--prev" data-rubros-prev aria-label="Rubro anterior">
+            <svg class="icon" aria-hidden="true"><use href="#icon-chevron"></use></svg>
+          </button>
+          <div class="rubros-spotlight-card">
+            <div class="rubros-spotlight-media">
+              <img data-spotlight-img src="assets/rubros/plantas-ai.png" alt="Ilustración de una planta frondosa en una maceta de barro" width="1024" height="1024">
+            </div>
+            <div class="rubros-spotlight-body">
+              <h3 data-spotlight-title>Plantas</h3>
+              <p data-spotlight-text>El corazón de Vivero Vancho: variedad de plantas de interior y exterior para cada rincón de tu casa.</p>
+            </div>
+          </div>
+          <button type="button" class="rubros-nav rubros-nav--next" data-rubros-next aria-label="Rubro siguiente">
+            <svg class="icon" aria-hidden="true"><use href="#icon-chevron"></use></svg>
+          </button>
+        </div>
+        <div class="rubros-thumbs" role="tablist" aria-label="Elegir rubro" data-rubros-thumbs>
+          <button type="button" class="rubros-thumb is-active" role="tab" aria-selected="true"
+            data-img="assets/rubros/plantas-ai.png"
+            data-alt="Ilustración de una planta frondosa en una maceta de barro"
+            data-title="Plantas"
+            data-text="El corazón de Vivero Vancho: variedad de plantas de interior y exterior para cada rincón de tu casa.">
+            <img src="assets/rubros/plantas-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Plantas</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/tierra-sustratos-ai.png"
+            data-alt="Ilustración de tierra para plantas con una pala de jardín"
+            data-title="Tierra y sustratos"
+            data-text="Tierra de Terrafertil y sustratos para que tus plantas arranquen bien desde la maceta.">
+            <img src="assets/rubros/tierra-sustratos-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Tierra y sustratos</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/mantenimiento-ai.png"
+            data-alt="Ilustración de un rociador y una regadera para el cuidado de plantas"
+            data-title="Mantenimiento de plantas"
+            data-text="Fertilizantes, herbicidas y agroquímicos para cuidar lo que ya tenés en casa.">
+            <img src="assets/rubros/mantenimiento-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Mantenimiento</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/macetas-ai.png"
+            data-alt="Ilustración de macetas de barro apiladas de distintos tamaños"
+            data-title="Macetas"
+            data-text="Macetas de barro y de fibrocemento, en distintos tamaños y estilos.">
+            <img src="assets/rubros/macetas-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Macetas</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/muebles-exterior-ai.png"
+            data-alt="Ilustración de un sillón de mimbre para exterior"
+            data-title="Muebles de exterior"
+            data-text="Reposeras, mesas de plástico y de metal, y sillas para tu patio o balcón.">
+            <img src="assets/rubros/muebles-exterior-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Muebles de exterior</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/decoracion-jardin-ai.png"
+            data-alt="Ilustración de un gnomo de jardín de cerámica"
+            data-title="Decoración de jardín"
+            data-text="Gnomos, budas, perros de jardín y otros adornos para darle personalidad a tu espacio verde.">
+            <img src="assets/rubros/decoracion-jardin-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Decoración de jardín</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/camping-ai.png"
+            data-alt="Ilustración de una carpa de campamento con un farol"
+            data-title="Camping"
+            data-text="Artículos de camping para tu próxima escapada.">
+            <img src="assets/rubros/camping-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Camping</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/acuario-ai.png"
+            data-alt="Ilustración de una pecera redonda con un pez de colores"
+            data-title="Acuario e insumos"
+            data-text="Todo lo necesario para armar y mantener tu acuario.">
+            <img src="assets/rubros/acuario-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Acuario e insumos</span>
+          </button>
+          <button type="button" class="rubros-thumb" role="tab" aria-selected="false"
+            data-img="assets/rubros/piscinas-ai.png"
+            data-alt="Ilustración de un flotador de piscina y un bidón de productos de limpieza"
+            data-title="Insumos para piscinas"
+            data-text="Productos para mantener tu pileta lista todo el verano.">
+            <img src="assets/rubros/piscinas-ai.png" alt="" width="1024" height="1024" loading="lazy">
+            <span>Insumos para piscinas</span>
+          </button>
+        </div>
+        <p class="sr-only" role="status" aria-live="polite" data-rubros-announce></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== NOSOTROS =========================== -->
+  <section id="nosotros" class="section section-alt">
+    <div class="container nosotros-grid">
+      <div class="stat-badge">
+        <strong>+50</strong>
+        <span>años de trayectoria</span>
+      </div>
+      <div class="nosotros-copy">
+        <p class="kicker">// nuestra historia</p>
+        <h2>Más de 50 años en el mismo barrio</h2>
+        <p>Vivero Vancho acompaña a las familias de Moreno desde hace más de
+          50 años, ayudando a elegir la planta justa para cada espacio y
+          resolviendo todo lo que hace falta para el jardín: desde la tierra
+          hasta la maceta.</p>
+        <p>Somos un vivero de barrio — atendido por la misma familia, con el
+          mismo cuidado de siempre.</p>
+        <a class="btn btn-secondary" href="https://www.instagram.com/viverovancho/" target="_blank" rel="noopener">Seguinos en Instagram</a>
+      </div>
+    </div>
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,0 480,80 720,40 C960,0 1200,80 1440,40 L1440,80 L0,80 Z" fill="var(--bg)"/></svg>
+    </div>
+  </section>
+
+  <!-- =========================== RESEÑAS =========================== -->
+  <section id="resenas" class="section section--no-top-border">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge-ejemplo">Ejemplo</span>
+        <h2>Reseñas</h2>
+        <p class="lead">Todavía estamos juntando las reseñas de nuestros clientes
+          para mostrar acá. Así se van a ver cuando las tengamos:</p>
+      </div>
+      <div class="resenas-grid">
+        <div class="resena-card">
+          <span class="badge-ejemplo">Ejemplo</span>
+          <p class="cita">"Encontré justo la planta que buscaba y me asesoraron muy bien para cuidarla."</p>
+          <p class="autor">— Reseña de ejemplo</p>
+        </div>
+        <div class="resena-card">
+          <span class="badge-ejemplo">Ejemplo</span>
+          <p class="cita">"Un vivero de toda la vida en el barrio, siempre tienen lo que necesito."</p>
+          <p class="autor">— Reseña de ejemplo</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== UBICACIÓN =========================== -->
+  <section id="ubicacion" class="section section-alt">
+    <div class="container ubicacion-grid">
+      <div class="ubicacion-info">
+        <p class="kicker">// visitanos</p>
+        <h2>Encontranos en Moreno</h2>
+        <div class="info-item">
+          <div class="info-icon"><svg class="icon"><use href="#icon-pin"></use></svg></div>
+          <div>
+            <h3>Dirección</h3>
+            <p>Bv. Juan Domingo Perón 1232, Moreno, Buenos Aires</p>
+            <a class="link" href="https://www.google.com/maps/search/?api=1&query=Bv.+Juan+Domingo+Peron+1232+Moreno+Buenos+Aires" target="_blank" rel="noopener">Cómo llegar →</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><svg class="icon"><use href="#icon-camera"></use></svg></div>
+          <div>
+            <h3>Instagram</h3>
+            <a class="link" href="https://www.instagram.com/viverovancho/" target="_blank" rel="noopener">@viverovancho</a>
+          </div>
+        </div>
+      </div>
+      <div class="map-frame">
+        <iframe src="https://www.google.com/maps?q=Bv.+Juan+Domingo+Peron+1232,+Moreno,+Buenos+Aires&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de Vivero Vancho en el mapa"></iframe>
+      </div>
+    </div>
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="var(--bg)"/></svg>
+    </div>
+  </section>
+
+  <!-- =========================== CONTACTO =========================== -->
+  <section id="contacto" class="section section--no-top-border">
+    <div class="container contact-grid">
+      <div>
+        <p class="kicker">// hablemos</p>
+        <h2>Contacto</h2>
+        <p class="contact-note">Estamos actualizando nuestros medios de
+          contacto — muy pronto vas a poder escribirnos por WhatsApp y mail.
+          Mientras tanto, escribinos por
+          <a class="link" href="https://www.instagram.com/viverovancho/" target="_blank" rel="noopener">Instagram</a>
+          o pasá por el local en Bv. Juan Domingo Perón 1232, Moreno.</p>
+      </div>
+
+      <form class="contact-form" data-contact-form novalidate>
+        <div class="form-row">
+          <label for="cf-name">Nombre</label>
+          <input id="cf-name" name="name" type="text" required autocomplete="name">
+        </div>
+        <div class="form-row">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="form-row">
+          <label for="cf-message">Mensaje</label>
+          <textarea id="cf-message" name="message" rows="4" required></textarea>
+        </div>
+        <!-- Sin backend todavía: el envío lo simula main.js (initContactForm).
+             Cuando exista el endpoint de Formspree (skill, Fase 4), reemplazar
+             el bloque marcado "TODO backend" en main.js por un fetch() real.
+             Fase 4 además requiere el mail de destino real del cliente. -->
+        <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+        <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© <span data-year>2026</span> Vivero Vancho — Moreno, Buenos Aires.</span>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/viverovancho/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#ubicacion">Cómo llegar</a>
+    </div>
+  </div>
+</footer>
+
+<script defer src="lib/manifest.js"></script>
+<script defer src="main.js"></script>
+</body>
+</html>
