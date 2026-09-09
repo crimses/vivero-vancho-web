@@ -1,0 +1,110 @@
+{
+  "hero-plant": {
+    "url": "https://live.staticflickr.com/4049/4527903734_4eee72feae_b.jpg",
+    "title": "Fensterblatt (Monstera deliciosa)",
+    "creator": "blumenbiene",
+    "creator_url": "https://www.flickr.com/photos/47439717@N05",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/47439717@N05/4527903734",
+    "source": "flickr",
+    "src": "assets/img/hero-plant.webp"
+  },
+  "secondary-plant": {
+    "url": "https://live.staticflickr.com/8154/7170019205_60a581a955_b.jpg",
+    "title": "Gummibaum (Ficus elastica Robusta)",
+    "creator": "blumenbiene",
+    "creator_url": "https://www.flickr.com/photos/47439717@N05",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/47439717@N05/7170019205",
+    "source": "flickr",
+    "src": "assets/img/secondary-plant.webp"
+  },
+  "category-interior": {
+    "url": "https://pd.w.org/2026/05/3036a1c684cbf1691.21021055-1536x2048.jpg",
+    "title": "A healthy peace lily plant with white flowers in a pot, displayed on a bright yellow surface against a plain wall.",
+    "creator": "Alina Kakshapati",
+    "creator_url": "https://wordpress.org/photos/author/aleenak19/",
+    "license": "cc0",
+    "license_version": "1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "foreign_landing_url": "https://wordpress.org/photos/photo/3036a1c684/",
+    "source": "wordpress",
+    "src": "assets/img/category-interior.webp"
+  },
+  "category-exterior": {
+    "url": "https://live.staticflickr.com/73/192254679_39d718d430_b.jpg",
+    "title": "nursery",
+    "creator": "Muffet",
+    "creator_url": "https://www.flickr.com/photos/53133240@N00",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/53133240@N00/192254679",
+    "source": "flickr",
+    "src": "assets/img/category-exterior.webp"
+  },
+  "category-macetas": {
+    "url": "https://pd.w.org/2026/03/29269bd11f19642a0.88733813-2048x1151.jpg",
+    "title": "A long-necked terracotta clay pot with etched line patterns nestled between large, textured grey boulders and smaller moss-covered rocks",
+    "creator": "Mutebi Ivan Junior",
+    "creator_url": "https://naturespulsephotography.com/",
+    "license": "cc0",
+    "license_version": "1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "foreign_landing_url": "https://wordpress.org/photos/photo/29269bd11f/",
+    "source": "wordpress",
+    "src": "assets/img/category-macetas.webp"
+  },
+  "leaf-branch-1": {
+    "url": "https://live.staticflickr.com/49/182126832_cb6d644630_b.jpg",
+    "title": "Monstera Leaf",
+    "creator": "ewen and donabel",
+    "creator_url": "https://www.flickr.com/photos/85979850@N00",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/85979850@N00/182126832",
+    "source": "flickr",
+    "src": "assets/img/leaf-branch-1.webp"
+  },
+  "leaf-branch-2": {
+    "url": "https://live.staticflickr.com/4116/4798340252_60aea6f61e_b.jpg",
+    "title": "Sadleria cyatheoides",
+    "creator": "D.Eickhoff",
+    "creator_url": "https://www.flickr.com/photos/50823119@N08",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/50823119@N08/4798340252",
+    "source": "flickr",
+    "src": "assets/img/leaf-branch-2.webp"
+  },
+  "leaf-branch-3": {
+    "url": "https://live.staticflickr.com/5041/5370757854_da8b767430_b.jpg",
+    "title": "Palm frond",
+    "creator": "SamuelJohn.de",
+    "creator_url": "https://www.flickr.com/photos/47656901@N08",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/47656901@N08/5370757854",
+    "source": "flickr",
+    "src": "assets/img/leaf-branch-3.webp"
+  },
+  "og-image": {
+    "url": "https://live.staticflickr.com/4049/4527903734_4eee72feae_b.jpg",
+    "title": "Fensterblatt (Monstera deliciosa)",
+    "creator": "blumenbiene",
+    "creator_url": "https://www.flickr.com/photos/47439717@N05",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/47439717@N05/4527903734",
+    "source": "flickr",
+    "src": "assets/img/og-image.webp"
+  }
+}
