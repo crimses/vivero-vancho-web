@@ -29,6 +29,7 @@
     <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Z"/><circle cx="12" cy="9" r="2.6" fill="#F3ECDD"/></symbol>
     <symbol id="icon-camera" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="15" rx="4"/><rect x="8" y="3" width="8" height="3.5" rx="1"/><circle cx="12" cy="13.5" r="4.2" fill="#F3ECDD"/><circle cx="12" cy="13.5" r="2.2"/><circle cx="18" cy="9.3" r="1" fill="#F3ECDD"/></symbol>
     <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="M9 4L17 12L9 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M12 21C12 21 3 14.5 3 8.5C3 5.5 5.5 3 8.5 3C10.2 3 11.5 3.8 12 5C12.5 3.8 13.8 3 15.5 3C18.5 3 21 5.5 21 8.5C21 14.5 12 21 12 21Z"/></symbol>
   </defs>
 </svg>
 
@@ -43,7 +44,7 @@
         <path d="M50,68 C39,59 29,45 23,29 C35,32 45,46 50,68 Z" fill="#6FA76B"/>
         <path d="M50,68 C61,59 71,45 77,29 C65,32 55,46 50,68 Z" fill="#2C5A32"/>
       </svg>
-      <span class="logo-text">Vivero Vancho<span>Más de 50 años en el barrio</span></span>
+      <span class="logo-text">Vivero Vancho</span>
     </a>
     <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menú</button>
     <nav>
@@ -61,64 +62,220 @@
 
   <!-- =========================== HERO =========================== -->
   <section class="hero">
+    <!-- Ramitos de hojas sueltas en las esquinas superiores del hero, estilo
+         "manojo" (varias hojas de distinto tamaño y ángulo desde un mismo
+         punto) — sólo adorno, ver referencia del cliente. -->
+    <div class="hero-leaves hero-leaves-left" aria-hidden="true">
+      <svg viewBox="0 0 220 220">
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="hero-leaves hero-leaves-right" aria-hidden="true">
+      <svg viewBox="0 0 220 220">
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <!-- Mismos manojos, ahora también en las esquinas inferiores, para que
+         el verde enmarque el hero completo (pedido del cliente: más plantas
+         en el banner). Reutilizan el mismo dibujo espejado con CSS. -->
+    <div class="hero-leaves hero-leaves-bottom hero-leaves-bottom-left" aria-hidden="true">
+      <svg viewBox="0 0 220 220">
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="hero-leaves hero-leaves-bottom hero-leaves-bottom-right" aria-hidden="true">
+      <svg viewBox="0 0 220 220">
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(8,16) rotate(255) scale(.55)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(34,16) rotate(80) scale(.6)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(18,10) rotate(235) scale(.7)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--sage-deep)"/>
+        <path transform="translate(30,22) rotate(110) scale(.85)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(10,26) rotate(205) scale(.95)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent)"/>
+        <path transform="translate(24,14) rotate(135) scale(1.1)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,0 C-14,-18 -16,-45 -6,-70 C-2,-80 0,-88 0,-90 C0,-88 2,-80 6,-70 C16,-45 14,-18 0,0 Z" fill="var(--accent-strong)"/>
+        <path transform="translate(16,20) rotate(165) scale(1.3)" d="M0,-6 L0,-82" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+      </svg>
+    </div>
+
     <div class="container hero-inner">
-      <div>
+      <div class="hero-copy">
         <span class="kicker-badge"><svg class="icon"><use href="#icon-sprout"></use></svg> Vivero de barrio en Moreno</span>
-        <h1>Tu vivero de siempre, con más de 50 años cuidando el barrio.</h1>
+        <h1>
+          <svg class="hero-spark hero-spark-left" viewBox="0 0 40 40" aria-hidden="true">
+            <g stroke="var(--accent)" stroke-width="3" stroke-linecap="round">
+              <path d="M20,2 L20,15"/>
+              <path d="M20,25 L20,34"/>
+              <path d="M2,20 L13,20"/>
+              <path d="M27,20 L38,20"/>
+              <path d="M8,8 L15,15"/>
+            </g>
+          </svg>
+          <span class="hero-title-line hero-title-line--dark">Tu vivero</span>
+          <svg class="hero-underline" viewBox="0 0 230 20" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M2,14 C42,2 84,2 114,10 C146,18 188,18 228,6" fill="none" stroke="var(--sage-deep)" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+          <span class="hero-title-line hero-title-line--accent">de toda la vida</span>
+          <svg class="hero-spark hero-spark-right" viewBox="0 0 40 40" aria-hidden="true">
+            <g stroke="var(--accent-strong)" stroke-width="3" stroke-linecap="round">
+              <path d="M20,4 L20,16"/>
+              <path d="M20,24 L20,32"/>
+              <path d="M4,20 L14,20"/>
+              <path d="M26,20 L36,20"/>
+              <path d="M27,10 L33,4"/>
+            </g>
+          </svg>
+        </h1>
         <p>Plantas, tierra, macetas y todo lo que necesitás para tu jardín o tu
-          balcón — atendido por la misma familia desde hace más de 50 años,
-          en Bv. Juan Domingo Perón 1232.</p>
+          balcón — atendido por la misma familia desde hace más de 50 años.</p>
+        <p class="hero-address">
+          <svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg>
+          Bv. Juan Domingo Perón 1232, Moreno
+        </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#rubros">Ver nuestros rubros</a>
+          <a class="btn btn-primary" href="#rubros">Ver nuestros rubros <span aria-hidden="true">→</span></a>
           <a class="btn btn-secondary" href="#ubicacion">Cómo llegar</a>
         </div>
       </div>
-      <div class="hero-art">
-        <img src="assets/hero/vivero-jardin.jpg" alt="Jardín del vivero con macetas de rosas en flor, bajo una palmera" width="890" height="825" loading="eager">
-        <p>Vivero Vancho — Moreno, Buenos Aires</p>
-      </div>
-    </div>
 
-    <!-- Enredaderas decorativas: crecen con el scroll (ver initHeroVines en
-         main.js). Solo en pantallas anchas, donde hay margen fuera del
-         container para que no invadan el texto. -->
-    <div class="hero-vine hero-vine-left" aria-hidden="true">
-      <svg viewBox="0 0 60 300" preserveAspectRatio="none">
-        <path class="vine-stem" d="M22,300 C40,270 6,245 26,215 C44,185 6,160 26,130 C44,100 8,70 24,40 C36,20 12,8 20,0" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
-        <g class="vine-leaf" data-threshold="0.15" transform="translate(30,240) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
-        <g class="vine-leaf" data-threshold="0.32" transform="translate(14,180) rotate(35)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
-        <g class="vine-leaf" data-threshold="0.48" transform="translate(32,130) rotate(-25)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
-        <g class="vine-leaf" data-threshold="0.62" transform="translate(10,85) rotate(30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
-        <g class="vine-leaf" data-threshold="0.75" transform="translate(28,45) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
-        <g class="vine-flower" data-threshold="0.88" transform="translate(20,14)">
-          <circle cx="-6" cy="-3" r="3.4" fill="var(--terracota)"/>
-          <circle cx="6" cy="-3" r="3.4" fill="var(--terracota)"/>
-          <circle cx="0" cy="-7" r="3.4" fill="var(--terracota)"/>
-          <circle cx="0" cy="0" r="3.4" fill="var(--terracota)"/>
-          <circle cx="0" cy="-2" r="1.8" fill="#FBE9A8"/>
-        </g>
-      </svg>
-    </div>
-    <div class="hero-vine hero-vine-right" aria-hidden="true">
-      <svg viewBox="0 0 60 300" preserveAspectRatio="none">
-        <path class="vine-stem" d="M22,300 C40,270 6,245 26,215 C44,185 6,160 26,130 C44,100 8,70 24,40 C36,20 12,8 20,0" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
-        <g class="vine-leaf" data-threshold="0.15" transform="translate(30,240) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
-        <g class="vine-leaf" data-threshold="0.32" transform="translate(14,180) rotate(35)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
-        <g class="vine-leaf" data-threshold="0.48" transform="translate(32,130) rotate(-25)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
-        <g class="vine-leaf" data-threshold="0.62" transform="translate(10,85) rotate(30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent-strong)"/></g>
-        <g class="vine-leaf" data-threshold="0.75" transform="translate(28,45) rotate(-30)"><path d="M0,0 C7,-6 17,-6 22,0 C17,6 7,6 0,0 Z" fill="var(--accent)"/></g>
-        <g class="vine-flower" data-threshold="0.88" transform="translate(20,14)">
-          <circle cx="-6" cy="-3" r="3.4" fill="var(--terracota)"/>
-          <circle cx="6" cy="-3" r="3.4" fill="var(--terracota)"/>
-          <circle cx="0" cy="-7" r="3.4" fill="var(--terracota)"/>
-          <circle cx="0" cy="0" r="3.4" fill="var(--terracota)"/>
-          <circle cx="0" cy="-2" r="1.8" fill="#FBE9A8"/>
-        </g>
-      </svg>
+      <div class="hero-art">
+        <!-- Ramitas decorativas — sólo adorno, sin significado. -->
+        <svg class="hero-leaf hero-leaf-tl" viewBox="0 0 90 90" aria-hidden="true">
+          <path d="M45,85 C40,60 40,35 45,5" fill="none" stroke="var(--sage-deep)" stroke-width="2.5" stroke-linecap="round"/>
+          <g fill="var(--accent)">
+            <path d="M45,20 C40,14 30,14 25,20 C30,26 40,26 45,20 Z"/>
+            <path d="M45,40 C50,34 60,34 65,40 C60,46 50,46 45,40 Z"/>
+            <path d="M45,58 C40,52 30,52 25,58 C30,64 40,64 45,58 Z"/>
+          </g>
+        </svg>
+        <svg class="hero-leaf hero-leaf-tr" viewBox="0 0 80 80" aria-hidden="true">
+          <path d="M12,74 C22,54 40,38 70,28" fill="none" stroke="var(--sage-deep)" stroke-width="2.5" stroke-linecap="round"/>
+          <g fill="var(--accent)">
+            <path d="M28,52 C24,45 14,44 8,49 C12,56 22,58 28,52 Z"/>
+            <path d="M48,38 C50,30 60,26 68,29 C66,37 56,42 48,38 Z"/>
+          </g>
+        </svg>
+        <svg class="hero-leaf hero-leaf-bl" viewBox="0 0 110 110" aria-hidden="true">
+          <path d="M15,10 C20,45 45,70 95,90" fill="none" stroke="var(--sage-deep)" stroke-width="3" stroke-linecap="round"/>
+          <g fill="var(--accent-strong)">
+            <path d="M28,30 C21,23 9,23 2,30 C9,37 21,37 28,30 Z"/>
+            <path d="M48,55 C54,47 66,47 73,55 C66,63 54,63 48,55 Z"/>
+            <path d="M75,78 C68,71 56,71 49,78 C56,85 68,85 75,78 Z"/>
+          </g>
+        </svg>
+        <svg class="hero-leaf hero-leaf-br" viewBox="0 0 90 90" aria-hidden="true">
+          <path d="M20,5 C50,15 70,35 80,80" fill="none" stroke="var(--sage-deep)" stroke-width="2.5" stroke-linecap="round"/>
+          <g fill="var(--accent)">
+            <path d="M35,22 C30,16 20,16 15,22 C20,28 30,28 35,22 Z"/>
+            <path d="M58,45 C63,39 73,39 78,45 C73,51 63,51 58,45 Z"/>
+          </g>
+        </svg>
+
+        <div class="hero-photo">
+          <img src="assets/hero/vivero-jardin.jpg" alt="Jardín del vivero con macetas de rosas en flor, bajo una palmera" width="890" height="825" loading="eager">
+        </div>
+
+        <div class="hero-seal">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <path fill="var(--accent)" d="M193,100 L191.2,103.6 L186.5,106.8 L180.7,109.5 L175.8,112 L173.6,114.6 L174.6,117.9 L178.2,122 L182.5,126.8 L185.6,131.6 L185.9,135.6 L182.9,138.2 L177.3,139.4 L170.9,139.7 L165.4,140.1 L162.4,141.7 L162.1,145.1 L163.8,150.3 L166,156.4 L167,162 L165.8,165.8 L162,167 L156.4,166 L150.3,163.8 L145.1,162.1 L141.7,162.4 L140.1,165.4 L139.7,170.9 L139.4,177.3 L138.2,182.9 L135.6,185.9 L131.6,185.6 L126.8,182.5 L122,178.2 L117.9,174.6 L114.6,173.6 L112,175.8 L109.5,180.7 L106.8,186.5 L103.6,191.2 L100,193 L96.4,191.2 L93.2,186.5 L90.5,180.7 L88,175.8 L85.4,173.6 L82.1,174.6 L78,178.2 L73.2,182.5 L68.4,185.6 L64.4,185.9 L61.8,182.9 L60.6,177.3 L60.3,170.9 L59.9,165.4 L58.3,162.4 L54.9,162.1 L49.7,163.8 L43.6,166 L38,167 L34.2,165.8 L33,162 L34,156.4 L36.2,150.3 L37.9,145.1 L37.6,141.7 L34.6,140.1 L29.1,139.7 L22.7,139.4 L17.1,138.2 L14.1,135.6 L14.4,131.6 L17.5,126.8 L21.8,122 L25.4,117.9 L26.4,114.6 L24.2,112 L19.3,109.5 L13.5,106.8 L8.8,103.6 L7,100 L8.8,96.4 L13.5,93.2 L19.3,90.5 L24.2,88 L26.4,85.4 L25.4,82.1 L21.8,78 L17.5,73.2 L14.4,68.4 L14.1,64.4 L17.1,61.8 L22.7,60.6 L29.1,60.3 L34.6,59.9 L37.6,58.3 L37.9,54.9 L36.2,49.7 L34,43.6 L33,38 L34.2,34.2 L38,33 L43.6,34 L49.7,36.2 L54.9,37.9 L58.3,37.6 L59.9,34.6 L60.3,29.1 L60.6,22.7 L61.8,17.1 L64.4,14.1 L68.4,14.4 L73.2,17.5 L78,21.8 L82.1,25.4 L85.4,26.4 L88,24.2 L90.5,19.3 L93.2,13.5 L96.4,8.8 L100,7 L103.6,8.8 L106.8,13.5 L109.5,19.3 L112,24.2 L114.6,26.4 L117.9,25.4 L122,21.8 L126.8,17.5 L131.6,14.4 L135.6,14.1 L138.2,17.1 L139.4,22.7 L139.7,29.1 L140.1,34.6 L141.7,37.6 L145.1,37.9 L150.3,36.2 L156.4,34 L162,33 L165.8,34.2 L167,38 L166,43.6 L163.8,49.7 L162.1,54.9 L162.4,58.3 L165.4,59.9 L170.9,60.3 L177.3,60.6 L182.9,61.8 L185.9,64.4 L185.6,68.4 L182.5,73.2 L178.2,78 L174.6,82.1 L173.6,85.4 L175.8,88 L180.7,90.5 L186.5,93.2 L191.2,96.4 Z"/>
+          </svg>
+          <div class="hero-seal-text">
+            <svg class="icon" aria-hidden="true"><use href="#icon-sprout"></use></svg>
+            <strong>Más de<br>50 años</strong>
+            <span>en el barrio</span>
+            <svg class="icon icon-heart" aria-hidden="true"><use href="#icon-heart"></use></svg>
+          </div>
+        </div>
+
+        <div class="hero-feature-card">
+          <div class="hero-feature">
+            <svg class="icon" aria-hidden="true"><use href="#icon-sprout"></use></svg>
+            <span>Plantas<small>de interior y exterior</small></span>
+          </div>
+          <div class="hero-feature">
+            <svg class="icon" aria-hidden="true"><use href="#icon-pot"></use></svg>
+            <span>Macetas<small>y accesorios</small></span>
+          </div>
+          <div class="hero-feature">
+            <svg class="icon" aria-hidden="true"><use href="#icon-soil"></use></svg>
+            <span>Tierra y sustratos<small>de calidad</small></span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="wave-divider" aria-hidden="true">
       <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="var(--sage-deep)"/></svg>
+      <!-- Gnomo corriendo sobre la ola, como si fuera la cima de una montaña
+           verde — sólo adorno, en bucle. Se congela si el usuario prefiere
+           menos movimiento (ver prefers-reduced-motion en el CSS). -->
+      <div class="hero-wave-gnome">
+        <div class="gnome-bob">
+          <svg viewBox="0 0 46 64">
+            <g class="gnome-leg gnome-leg-back">
+              <rect x="14" y="46" width="8" height="13" rx="3" fill="#355E3B"/>
+              <ellipse cx="18" cy="60" rx="5.5" ry="3.4" fill="#1f1b16"/>
+            </g>
+            <g class="gnome-leg gnome-leg-front">
+              <rect x="24" y="46" width="8" height="13" rx="3" fill="#355E3B"/>
+              <ellipse cx="28" cy="60" rx="5.5" ry="3.4" fill="#1f1b16"/>
+            </g>
+            <!-- Campera roja -->
+            <path d="M10,26 C10,14 36,14 36,26 L38,48 C38,54 8,54 8,48 Z" fill="#C0392B"/>
+            <!-- Cara y nariz -->
+            <circle cx="23" cy="22" r="10" fill="#E8C39E"/>
+            <ellipse cx="23" cy="25.5" rx="3" ry="2.4" fill="#DFA87B"/>
+            <!-- Barba blanca tupida -->
+            <path d="M11,21 C11,34 15,41 23,42 C31,41 35,34 35,21 C35,21 29,29 23,29 C17,29 11,21 11,21 Z" fill="#F7F5F0"/>
+            <!-- Gorro rojo, alto y con caída -->
+            <path d="M32,2 C35,13 37,21 35,26 L11,26 C10,19 15,9 23,3 C26,1 29,1 32,2 Z" fill="#C0392B"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -236,7 +393,7 @@
       </div>
       <div class="nosotros-copy">
         <p class="kicker">// nuestra historia</p>
-        <h2>Más de 50 años en el mismo barrio</h2>
+        <h2>Más de 50 años, la misma familia</h2>
         <p>Vivero Vancho acompaña a las familias de Moreno desde hace más de
           50 años, ayudando a elegir la planta justa para cada espacio y
           resolviendo todo lo que hace falta para el jardín: desde la tierra
@@ -260,16 +417,79 @@
         <p class="lead">Todavía estamos juntando las reseñas de nuestros clientes
           para mostrar acá. Así se van a ver cuando las tengamos:</p>
       </div>
-      <div class="resenas-grid">
-        <div class="resena-card">
-          <span class="badge-ejemplo">Ejemplo</span>
-          <p class="cita">"Encontré justo la planta que buscaba y me asesoraron muy bien para cuidarla."</p>
-          <p class="autor">— Reseña de ejemplo</p>
+    </div>
+
+    <!-- Carrusel infinito: la pista repite el mismo set de tarjetas dos
+         veces seguidas y una animación CSS la desplaza -50% en loop, así
+         el corte entre una vuelta y la siguiente queda invisible. La
+         segunda copia está oculta a lectores de pantalla para no
+         duplicar el contenido. Se pausa al pasar el mouse/foco y se
+         desactiva con prefers-reduced-motion. -->
+    <div class="resenas-track-wrap" data-resenas-track-wrap>
+      <div class="resenas-track" data-resenas-track>
+        <div class="resenas-set">
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Encontré justo la planta que buscaba y me asesoraron muy bien para cuidarla."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Un vivero de toda la vida, siempre tienen lo que necesito."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Llevé una foto de mi balcón y me ayudaron a armar todo el rincón verde."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"La tierra y los sustratos son de primera, mis plantas lo notaron enseguida."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Buenísima atención, me explicaron cómo trasplantar sin apuro y con paciencia."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Fui a buscar una maceta y salí con media docena de plantas nuevas."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
         </div>
-        <div class="resena-card">
-          <span class="badge-ejemplo">Ejemplo</span>
-          <p class="cita">"Un vivero de toda la vida en el barrio, siempre tienen lo que necesito."</p>
-          <p class="autor">— Reseña de ejemplo</p>
+        <div class="resenas-set" aria-hidden="true">
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Encontré justo la planta que buscaba y me asesoraron muy bien para cuidarla."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Un vivero de toda la vida, siempre tienen lo que necesito."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Llevé una foto de mi balcón y me ayudaron a armar todo el rincón verde."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"La tierra y los sustratos son de primera, mis plantas lo notaron enseguida."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Buenísima atención, me explicaron cómo trasplantar sin apuro y con paciencia."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-ejemplo">Ejemplo</span>
+            <p class="cita">"Fui a buscar una maceta y salí con media docena de plantas nuevas."</p>
+            <p class="autor">— Reseña de ejemplo</p>
+          </div>
         </div>
       </div>
     </div>
@@ -339,6 +559,9 @@
         <button type="submit" class="btn btn-primary">Enviar mensaje</button>
         <p class="form-status" data-form-status role="status" aria-live="polite"></p>
       </form>
+    </div>
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C240,0 480,80 720,40 C960,0 1200,80 1440,40 L1440,80 L0,80 Z" fill="var(--accent-strong)"/></svg>
     </div>
   </section>
 

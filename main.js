@@ -50,64 +50,6 @@
   }
 
   /* ---------------------------------------------------------------
-   * Enredaderas del hero — crecen con el scroll.
-   * Truco stroke-dasharray/dashoffset: el largo del trazo se mide con
-   * getTotalLength() y se "revela" según cuánto se scrolleó el hero.
-   * Si el usuario prefiere menos movimiento, se muestran ya crecidas.
-   * --------------------------------------------------------------- */
-  function initHeroVines() {
-    var hero = $(".hero");
-    if (!hero) return;
-    var stems = $all(".vine-stem", hero);
-    if (!stems.length) return;
-    var leaves = $all(".vine-leaf, .vine-flower", hero);
-    // Distancia de scroll para completar el crecimiento. Deliberadamente
-    // menor a la altura visual de la enredadera (300px): el header es
-    // sticky, así que si el crecimiento tardara tanto scroll como el alto
-    // de la enredadera, la flor (arriba de todo) quedaría tapada por el
-    // header justo cuando debería revelarse.
-    var growthDistance = 200;
-
-    var reduceMotion = window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    var lengths = stems.map(function (path) {
-      var len = path.getTotalLength();
-      path.style.strokeDasharray = len;
-      path.style.strokeDashoffset = reduceMotion ? 0 : len;
-      return len;
-    });
-
-    if (reduceMotion) {
-      leaves.forEach(function (el) { el.classList.add("is-visible"); });
-      return;
-    }
-
-    var ticking = false;
-    function update() {
-      ticking = false;
-      var rect = hero.getBoundingClientRect();
-      var progress = Math.min(Math.max(-rect.top / growthDistance, 0), 1);
-      stems.forEach(function (path, i) {
-        path.style.strokeDashoffset = lengths[i] * (1 - progress);
-      });
-      leaves.forEach(function (el) {
-        var threshold = parseFloat(el.getAttribute("data-threshold") || "0");
-        el.classList.toggle("is-visible", progress >= threshold);
-      });
-    }
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
-  }
-
-  /* ---------------------------------------------------------------
    * Rubros — carrusel "spotlight" (una tarjeta destacada que rota
    * entre los 9 rubros, con una fila de miniaturas para saltar a
    * cualquiera). El contenido de cada rubro vive en atributos data-*
@@ -261,7 +203,6 @@
   function boot() {
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
-    safe(initHeroVines, "initHeroVines");
     safe(initRubrosCarousel, "initRubrosCarousel");
     safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");
