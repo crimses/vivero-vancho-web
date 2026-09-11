@@ -659,11 +659,33 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   padding: .3rem .75rem;
   margin-bottom: .75rem;
 }
+/* Insignia de reseña real de Google (verde, para diferenciarla a simple
+   vista del terracota que usamos para contenido de ejemplo/placeholder). */
+.badge-google {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: var(--accent-strong);
+  color: #fff;
+  font-weight: 800;
+  font-size: .78rem;
+  letter-spacing: .02em;
+  border-radius: 999px;
+  padding: .3rem .75rem;
+  margin-bottom: .75rem;
+}
+.section-head .badge-google { font-size: .85rem; margin-bottom: 1rem; }
 /* Carrusel infinito: .resenas-track-wrap recorta y sangra de borde a
    borde (sale del .container a propósito); .resenas-track contiene dos
    copias idénticas del set de tarjetas una al lado de la otra y se anima
    corriéndose -50% de su ancho total, que es exactamente el ancho de una
-   copia — al llegar ahí el loop reinicia sin que se note el corte. */
+   copia — al llegar ahí el loop reinicia sin que se note el corte. Cada
+   copia repite las 9 reseñas reales 2 veces (ver comentario en el HTML,
+   18 tarjetas ≈ 5810px por copia) para que ningún monitor, por ancho que
+   sea, llegue a mostrar el final del set antes de que el loop reinicie.
+   La duración subió a 115s para mantener la misma velocidad de
+   desplazamiento de siempre (~50px/s) ahora que el recorrido es más
+   largo al haber más tarjetas por copia. */
 .resenas-track-wrap {
   overflow: hidden;
   margin-top: 2.5rem;
@@ -673,7 +695,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 .resenas-track {
   display: flex;
   width: max-content;
-  animation: resenas-scroll 38s linear infinite;
+  animation: resenas-scroll 115s linear infinite;
 }
 .resenas-track:hover,
 .resenas-track:focus-within {
@@ -714,6 +736,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   pointer-events: none;
 }
 .resena-card .badge-ejemplo,
+.resena-card .badge-google,
 .resena-card p.cita,
 .resena-card .autor { position: relative; z-index: 1; }
 .resena-card p.cita { font-size: 1.1rem; margin: 0 0 1rem; color: var(--text); }

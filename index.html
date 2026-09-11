@@ -409,86 +409,221 @@
   </section>
 
   <!-- =========================== RESEÑAS =========================== -->
+  <!-- Reseñas reales tomadas de la ficha de Google Maps del vivero
+       (4.8 estrellas, 336 opiniones al momento de copiarlas). Las 9
+       tarjetas son citas textuales de clientes reales, con su nombre y
+       la insignia "Local Guide" tal como las muestra Google (menos
+       Graciela Zarate, que en Google no tiene esa insignia); sólo se
+       ajustó puntuación/espaciado para que se lean bien en la web. -->
   <section id="resenas" class="section section--no-top-border">
     <div class="container">
       <div class="section-head">
-        <span class="badge-ejemplo">Ejemplo</span>
+        <span class="badge-google">★ 4.8 en Google · 336 opiniones</span>
         <h2>Reseñas</h2>
-        <p class="lead">Todavía estamos juntando las reseñas de nuestros clientes
-          para mostrar acá. Así se van a ver cuando las tengamos:</p>
+        <p class="lead">Esto es lo que dicen quienes ya nos visitaron. Reseñas reales de nuestra ficha de Google:</p>
       </div>
     </div>
 
     <!-- Carrusel infinito: la pista repite el mismo set de tarjetas dos
          veces seguidas y una animación CSS la desplaza -50% en loop, así
-         el corte entre una vuelta y la siguiente queda invisible. La
-         segunda copia está oculta a lectores de pantalla para no
-         duplicar el contenido. Se pausa al pasar el mouse/foco y se
-         desactiva con prefers-reduced-motion. -->
+         el corte entre una vuelta y la siguiente queda invisible. Con las
+         9 reseñas reales que tenemos, un set de 9 tarjetas (~2890px)
+         todavía queda más angosto que la pantalla en monitores anchos: la
+         animación llegaba a un punto sin tarjetas (hueco) antes de
+         reiniciar el loop. Para evitarlo, cada set repite las mismas 9
+         reseñas 2 veces seguidas (18 tarjetas, ~5810px), un ancho que ya
+         no se queda corto ni en monitores ultra-wide, y que además hace
+         que cada reseña se repita mucho menos seguido que antes (antes
+         eran 3 reseñas x4 repeticiones; ahora son 9 reseñas x2). Dentro
+         del primer set sólo la primera tanda de 9 queda accesible a
+         lectores de pantalla (aria-hidden en la repetición); el segundo
+         set completo ya está oculto a AT porque es la copia "fantasma"
+         para el loop. Se pausa al pasar el mouse/foco y se desactiva con
+         prefers-reduced-motion. -->
     <div class="resenas-track-wrap" data-resenas-track-wrap>
       <div class="resenas-track" data-resenas-track>
         <div class="resenas-set">
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Encontré justo la planta que buscaba y me asesoraron muy bien para cuidarla."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Un lugar al que voy hace décadas. La atención de toda la familia es excelente. Hay mucha variedad de productos y si entras a buscar plantas y adornos para el jardín, te asombra las cosas lindas que hay. Un honor tener en el barrio, un lugar tan agradable."</p>
+            <p class="autor">— Viviana Carpintero, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Un vivero de toda la vida, siempre tienen lo que necesito."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Muy destacable principalmente por la atención recibida. Mucha variedad y cantidad de plantas, flores, adornos, herramientas."</p>
+            <p class="autor">— Ignacio González Orfila, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Llevé una foto de mi balcón y me ayudaron a armar todo el rincón verde."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente lugar para ir a comprar plantas, muy buena atención, mis plantas comprada en Vancho, ¡muy recomendable!"</p>
+            <p class="autor">— Roxana Loza, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"La tierra y los sustratos son de primera, mis plantas lo notaron enseguida."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Conozco el vivero hace años, súper recomendable. La atención es muy cálida y la variedad, excelente. Es un paseo visitarlos, ¡un 10!"</p>
+            <p class="autor">— Cecilia Conforti, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Buenísima atención, me explicaron cómo trasplantar sin apuro y con paciencia."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Tiene muy lindas plantas y objetos bonitos. Los dueños son súper amables."</p>
+            <p class="autor">— Roxana Dagostino, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Fui a buscar una maceta y salí con media docena de plantas nuevas."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Es un placer ir a disfrutar de un ambiente natural, agradable, con una atención personalizada y amable, y después de todo comprar vida y belleza llevándote una planta."</p>
+            <p class="autor">— alicia beatriz concheiro, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y asesoramiento. ¡Desde hace 20 años los visito!"</p>
+            <p class="autor">— Erica Mohr, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Buenos precios, buenísima atención. ¡Hermoso lugar!"</p>
+            <p class="autor">— Graciela Zarate</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y muy buena calidad de productos."</p>
+            <p class="autor">— Nicolás Laudonio, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Un lugar al que voy hace décadas. La atención de toda la familia es excelente. Hay mucha variedad de productos y si entras a buscar plantas y adornos para el jardín, te asombra las cosas lindas que hay. Un honor tener en el barrio, un lugar tan agradable."</p>
+            <p class="autor">— Viviana Carpintero, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Muy destacable principalmente por la atención recibida. Mucha variedad y cantidad de plantas, flores, adornos, herramientas."</p>
+            <p class="autor">— Ignacio González Orfila, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente lugar para ir a comprar plantas, muy buena atención, mis plantas comprada en Vancho, ¡muy recomendable!"</p>
+            <p class="autor">— Roxana Loza, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Conozco el vivero hace años, súper recomendable. La atención es muy cálida y la variedad, excelente. Es un paseo visitarlos, ¡un 10!"</p>
+            <p class="autor">— Cecilia Conforti, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Tiene muy lindas plantas y objetos bonitos. Los dueños son súper amables."</p>
+            <p class="autor">— Roxana Dagostino, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Es un placer ir a disfrutar de un ambiente natural, agradable, con una atención personalizada y amable, y después de todo comprar vida y belleza llevándote una planta."</p>
+            <p class="autor">— alicia beatriz concheiro, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y asesoramiento. ¡Desde hace 20 años los visito!"</p>
+            <p class="autor">— Erica Mohr, Local Guide</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Buenos precios, buenísima atención. ¡Hermoso lugar!"</p>
+            <p class="autor">— Graciela Zarate</p>
+          </div>
+          <div class="resena-card" aria-hidden="true">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y muy buena calidad de productos."</p>
+            <p class="autor">— Nicolás Laudonio, Local Guide</p>
           </div>
         </div>
         <div class="resenas-set" aria-hidden="true">
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Encontré justo la planta que buscaba y me asesoraron muy bien para cuidarla."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Un lugar al que voy hace décadas. La atención de toda la familia es excelente. Hay mucha variedad de productos y si entras a buscar plantas y adornos para el jardín, te asombra las cosas lindas que hay. Un honor tener en el barrio, un lugar tan agradable."</p>
+            <p class="autor">— Viviana Carpintero, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Un vivero de toda la vida, siempre tienen lo que necesito."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Muy destacable principalmente por la atención recibida. Mucha variedad y cantidad de plantas, flores, adornos, herramientas."</p>
+            <p class="autor">— Ignacio González Orfila, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Llevé una foto de mi balcón y me ayudaron a armar todo el rincón verde."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente lugar para ir a comprar plantas, muy buena atención, mis plantas comprada en Vancho, ¡muy recomendable!"</p>
+            <p class="autor">— Roxana Loza, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"La tierra y los sustratos son de primera, mis plantas lo notaron enseguida."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Conozco el vivero hace años, súper recomendable. La atención es muy cálida y la variedad, excelente. Es un paseo visitarlos, ¡un 10!"</p>
+            <p class="autor">— Cecilia Conforti, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Buenísima atención, me explicaron cómo trasplantar sin apuro y con paciencia."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Tiene muy lindas plantas y objetos bonitos. Los dueños son súper amables."</p>
+            <p class="autor">— Roxana Dagostino, Local Guide</p>
           </div>
           <div class="resena-card">
-            <span class="badge-ejemplo">Ejemplo</span>
-            <p class="cita">"Fui a buscar una maceta y salí con media docena de plantas nuevas."</p>
-            <p class="autor">— Reseña de ejemplo</p>
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Es un placer ir a disfrutar de un ambiente natural, agradable, con una atención personalizada y amable, y después de todo comprar vida y belleza llevándote una planta."</p>
+            <p class="autor">— alicia beatriz concheiro, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y asesoramiento. ¡Desde hace 20 años los visito!"</p>
+            <p class="autor">— Erica Mohr, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Buenos precios, buenísima atención. ¡Hermoso lugar!"</p>
+            <p class="autor">— Graciela Zarate</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y muy buena calidad de productos."</p>
+            <p class="autor">— Nicolás Laudonio, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Un lugar al que voy hace décadas. La atención de toda la familia es excelente. Hay mucha variedad de productos y si entras a buscar plantas y adornos para el jardín, te asombra las cosas lindas que hay. Un honor tener en el barrio, un lugar tan agradable."</p>
+            <p class="autor">— Viviana Carpintero, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Muy destacable principalmente por la atención recibida. Mucha variedad y cantidad de plantas, flores, adornos, herramientas."</p>
+            <p class="autor">— Ignacio González Orfila, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente lugar para ir a comprar plantas, muy buena atención, mis plantas comprada en Vancho, ¡muy recomendable!"</p>
+            <p class="autor">— Roxana Loza, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Conozco el vivero hace años, súper recomendable. La atención es muy cálida y la variedad, excelente. Es un paseo visitarlos, ¡un 10!"</p>
+            <p class="autor">— Cecilia Conforti, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Tiene muy lindas plantas y objetos bonitos. Los dueños son súper amables."</p>
+            <p class="autor">— Roxana Dagostino, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Es un placer ir a disfrutar de un ambiente natural, agradable, con una atención personalizada y amable, y después de todo comprar vida y belleza llevándote una planta."</p>
+            <p class="autor">— alicia beatriz concheiro, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y asesoramiento. ¡Desde hace 20 años los visito!"</p>
+            <p class="autor">— Erica Mohr, Local Guide</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Buenos precios, buenísima atención. ¡Hermoso lugar!"</p>
+            <p class="autor">— Graciela Zarate</p>
+          </div>
+          <div class="resena-card">
+            <span class="badge-google">★★★★★ Google</span>
+            <p class="cita">"Excelente atención y muy buena calidad de productos."</p>
+            <p class="autor">— Nicolás Laudonio, Local Guide</p>
           </div>
         </div>
       </div>
