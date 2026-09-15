@@ -160,6 +160,45 @@
   }
 
   /* ---------------------------------------------------------------
+   * Nuestro mundo — galería con efecto "burbuja" al agrandar la foto.
+   * En desktop el agrandado ya lo resuelve CSS puro (:hover/:focus-visible
+   * en .galeria-item, ver styles.css). En celular no existe :hover, así
+   * que acá replicamos el mismo estado con la clase .is-zoomed: tocar una
+   * foto la agranda, tocarla de nuevo (o tocar afuera, o Escape) la vuelve
+   * a su tamaño normal. Sólo una foto queda agrandada a la vez.
+   * --------------------------------------------------------------- */
+  function initGaleriaZoom() {
+    var items = $all(".galeria-item:not(.galeria-item--placeholder)");
+    if (!items.length) return;
+
+    function closeAll(except) {
+      items.forEach(function (item) {
+        if (item !== except) item.classList.remove("is-zoomed");
+      });
+    }
+
+    items.forEach(function (item) {
+      item.addEventListener("click", function (e) {
+        var alreadyZoomed = item.classList.contains("is-zoomed");
+        closeAll(item);
+        if (alreadyZoomed) {
+          item.classList.remove("is-zoomed");
+        } else {
+          item.classList.add("is-zoomed");
+          e.preventDefault();
+        }
+      });
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".galeria-item")) closeAll();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeAll();
+    });
+  }
+
+  /* ---------------------------------------------------------------
    * Formulario de contacto — arranca simulado.
    * Cuando exista el endpoint de Formspree y el mail de destino real del
    * cliente (ver skill, Fase 4), reemplazar el bloque marcado
@@ -204,6 +243,7 @@
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
+    safe(initGaleriaZoom, "initGaleriaZoom");
     safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");
   }

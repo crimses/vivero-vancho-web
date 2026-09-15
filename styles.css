@@ -601,6 +601,64 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   }
 }
 
+/* --- Marcas (carrusel infinito de logos) ---
+   Mismo mecanismo que .resenas-track más abajo: .marcas-track contiene dos
+   copias idénticas del set de logos una al lado de la otra y se anima
+   corriéndose -50% de su ancho total (que es exactamente el ancho de una
+   copia), así el corte entre una vuelta y la siguiente no se nota. Se
+   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion. */
+.marcas-track-wrap {
+  overflow: hidden;
+  margin-top: 1rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marcas-track {
+  display: flex;
+  width: max-content;
+  /* 68s (el doble de los 34s originales) para mantener la misma velocidad
+     de desplazamiento ahora que cada copia repite el set de marcas 2 veces
+     (ver comentario en el HTML) — mismo criterio que .resenas-track. */
+  animation: marcas-scroll 68s linear infinite;
+}
+.marcas-track:hover,
+.marcas-track:focus-within {
+  animation-play-state: paused;
+}
+.marcas-set {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0 var(--gutter) 0 0;
+}
+@keyframes marcas-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marcas-track { animation: none; }
+}
+.marca-logo {
+  flex: 0 0 150px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.marca-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.marca-logo--placeholder {
+  border: 1px dashed rgba(74, 52, 35, .35);
+  border-radius: 12px;
+  color: var(--text-soft);
+  font-weight: 700;
+  font-size: .85rem;
+  background: var(--surface);
+}
+
 /* --- Nosotros --- */
 .nosotros-grid { display: grid; gap: 2.5rem; align-items: center; }
 @media (min-width: 860px) {
@@ -623,6 +681,76 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 .stat-badge strong { font-family: var(--display); font-size: 3rem; line-height: 1; }
 .stat-badge span { font-weight: 700; margin-top: .4rem; font-size: 1.05rem; }
 .nosotros-copy p { color: var(--text-soft); font-size: 1.15rem; }
+
+/* --- Nuestro mundo (galería de fotos reales) ---
+   Mosaico de 2 columnas en mobile y 4 en desktop, con la primera ficha
+   "destacada" ocupando el doble de ancho (y de alto, en desktop) para darle
+   jerarquía a la foto principal. Las fichas "próximamente" usan el mismo
+   trazo punteado que .resena-card (ver más abajo) para que se lean como
+   contenido en construcción y no como una foto rota.
+   Cada foto real es un <button> (ver index.html): al pasar el mouse por
+   arriba (o enfocarla con teclado) se agranda "en el lugar" tipo burbuja
+   para verla mejor, subiendo por encima de las fichas vecinas con z-index.
+   En celular, donde no existe :hover, el mismo estado se replica agregando
+   la clase .is-zoomed vía JS al tocar la foto (ver initGaleriaZoom en
+   main.js). Con prefers-reduced-motion activado, la transición se anula
+   sola por la regla global del final de este archivo. */
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+.galeria-item {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: var(--sage);
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.galeria-item--featured {
+  grid-column: span 2;
+  aspect-ratio: 16 / 9;
+}
+.galeria-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.galeria-item--placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--surface-alt);
+  border: 2px dashed var(--border);
+  color: var(--text-soft);
+  font-weight: 700;
+  font-size: .95rem;
+  cursor: default;
+}
+.galeria-item--placeholder .icon { width: 34px; height: 34px; color: var(--accent-strong); }
+.galeria-item:not(.galeria-item--placeholder):hover,
+.galeria-item:not(.galeria-item--placeholder):focus-visible,
+.galeria-item:not(.galeria-item--placeholder).is-zoomed {
+  transform: scale(1.15);
+  z-index: 5;
+  box-shadow: 0 22px 40px -14px rgba(38, 36, 28, .45);
+}
+@media (min-width: 700px) {
+  .galeria-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; }
+  .galeria-item { aspect-ratio: auto; }
+  .galeria-item--featured { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+}
 
 /* --- Reseñas --- */
 .badge-ejemplo {
