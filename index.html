@@ -128,7 +128,6 @@
     </div>
     <div class="hero-inner">
       <div class="hero-copy">
-        <p class="kicker hero-kicker">// vivero de barrio en moreno</p>
         <h1>
           <span class="hero-title-line hero-title-line--dark">Tu vivero</span>
           <span class="hero-title-line hero-title-line--accent">de toda la vida
@@ -398,9 +397,10 @@
       </div>
       <!-- Cada foto es un <button> (no <figure>) para que sea enfocable con
            teclado y "clickeable": al pasar el mouse por arriba se agranda
-           en el lugar para verla mejor (ver .galeria-item:hover en
-           styles.css); en celular, donde no hay hover, el mismo efecto se
-           dispara al tocarla (ver initGaleriaZoom en main.js) — pedido
+           un poco en el lugar (ver .galeria-item:hover en styles.css) y al
+           clickearla (o tocarla en celular) se abre en un lightbox de
+           pantalla completa para verla mejor, con flechas para pasar a la
+           siguiente foto (ver initGaleriaLightbox en main.js) — pedido
            explícito del cliente. El span .sr-only agrega "Ampliar foto: "
            antes del alt real, para que quien usa lector de pantalla
            entienda que el botón amplía la imagen sin perder la descripción
@@ -733,6 +733,26 @@
     </div>
   </div>
 </footer>
+
+<!-- Lightbox de la galería "Así es Vivero Vancho": se abre al clickear
+     cualquier foto de .galeria-grid para verla más grande (ver
+     initGaleriaLightbox en main.js). Arranca oculto (sin .is-open) y es
+     un único nodo que se reutiliza para todas las fotos. -->
+<div class="lightbox" data-lightbox hidden>
+  <button type="button" class="lightbox-close" data-lightbox-close aria-label="Cerrar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+  </button>
+  <button type="button" class="lightbox-nav lightbox-nav--prev" data-lightbox-prev aria-label="Foto anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button type="button" class="lightbox-nav lightbox-nav--next" data-lightbox-next aria-label="Foto siguiente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <figure class="lightbox-figure">
+    <img data-lightbox-img src="" alt="">
+    <figcaption data-lightbox-caption></figcaption>
+  </figure>
+</div>
 
 <script defer src="lib/manifest.js"></script>
 <script defer src="main.js"></script>

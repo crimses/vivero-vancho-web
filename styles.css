@@ -276,19 +276,6 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
     animation: none;
   }
 }
-/* Kicker minimalista del hero: mismo tratamiento tipográfico que
-   ".section .kicker" (texto chico, mayúsculas, verde), sin la píldora con
-   fondo/borde que tenía antes — así el "hook" arranca directo con
-   tipografía limpia, estilo de la referencia del cliente. */
-.hero-kicker {
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  font-size: .85rem;
-  font-weight: 800;
-  color: var(--accent-strong);
-  margin: 0 0 .9rem;
-}
-
 .hero h1 {
   font-size: clamp(2.4rem, 5.4vw, 3.7rem);
   line-height: 1.1;
@@ -689,12 +676,12 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
    trazo punteado que .resena-card (ver más abajo) para que se lean como
    contenido en construcción y no como una foto rota.
    Cada foto real es un <button> (ver index.html): al pasar el mouse por
-   arriba (o enfocarla con teclado) se agranda "en el lugar" tipo burbuja
-   para verla mejor, subiendo por encima de las fichas vecinas con z-index.
-   En celular, donde no existe :hover, el mismo estado se replica agregando
-   la clase .is-zoomed vía JS al tocar la foto (ver initGaleriaZoom en
-   main.js). Con prefers-reduced-motion activado, la transición se anula
-   sola por la regla global del final de este archivo. */
+   arriba (o enfocarla con teclado) se agranda "en el lugar" tipo burbuja,
+   subiendo por encima de las fichas vecinas con z-index. Al clickearla (o
+   tocarla en celular) se abre el lightbox de pantalla completa para verla
+   más grande (ver initGaleriaLightbox en main.js y .lightbox más abajo).
+   Con prefers-reduced-motion activado, la transición se anula sola por la
+   regla global del final de este archivo. */
 .galeria-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -740,8 +727,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 }
 .galeria-item--placeholder .icon { width: 34px; height: 34px; color: var(--accent-strong); }
 .galeria-item:not(.galeria-item--placeholder):hover,
-.galeria-item:not(.galeria-item--placeholder):focus-visible,
-.galeria-item:not(.galeria-item--placeholder).is-zoomed {
+.galeria-item:not(.galeria-item--placeholder):focus-visible {
   transform: scale(1.15);
   z-index: 5;
   box-shadow: 0 22px 40px -14px rgba(38, 36, 28, .45);
@@ -750,6 +736,91 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .galeria-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; }
   .galeria-item { aspect-ratio: auto; }
   .galeria-item--featured { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+}
+
+/* --- Lightbox de la galería ---
+   Un único overlay reutilizado para todas las fotos de .galeria-grid (ver
+   initGaleriaLightbox en main.js). Arranca con [hidden] + sin .is-open;
+   al abrir, JS saca el [hidden] y agrega .is-open en el frame siguiente
+   para que la transición de opacidad se vea (si arrancaran juntos, el
+   navegador no anima el cambio). body.has-lightbox congela el scroll de
+   fondo mientras el modal está abierto. */
+body.has-lightbox { overflow: hidden; }
+.lightbox[hidden] { display: none; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  background: rgba(20, 18, 12, .92);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.lightbox.is-open { opacity: 1; }
+.lightbox-figure {
+  margin: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+}
+.lightbox-figure img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 10rem);
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .6);
+}
+.lightbox-figure figcaption {
+  color: var(--surface, #fff);
+  opacity: .85;
+  font-size: .9rem;
+  text-align: center;
+  max-width: 60ch;
+}
+.lightbox-close,
+.lightbox-nav {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.lightbox-close:hover,
+.lightbox-nav:hover { background: rgba(255, 255, 255, .25); }
+.lightbox-close {
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+}
+.lightbox-close svg { width: 20px; height: 20px; }
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+}
+.lightbox-nav svg { width: 24px; height: 24px; }
+.lightbox-nav--prev { left: 1.25rem; }
+.lightbox-nav--next { right: 1.25rem; }
+@media (max-width: 599px) {
+  .lightbox { padding: 3rem 1rem; }
+  .lightbox-nav { width: 44px; height: 44px; }
+  .lightbox-nav--prev { left: .5rem; }
+  .lightbox-nav--next { right: .5rem; }
 }
 
 /* --- Reseñas --- */

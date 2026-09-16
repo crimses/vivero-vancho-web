@@ -160,41 +160,73 @@
   }
 
   /* ---------------------------------------------------------------
-   * Nuestro mundo — galería con efecto "burbuja" al agrandar la foto.
-   * En desktop el agrandado ya lo resuelve CSS puro (:hover/:focus-visible
-   * en .galeria-item, ver styles.css). En celular no existe :hover, así
-   * que acá replicamos el mismo estado con la clase .is-zoomed: tocar una
-   * foto la agranda, tocarla de nuevo (o tocar afuera, o Escape) la vuelve
-   * a su tamaño normal. Sólo una foto queda agrandada a la vez.
+   * Nuestro mundo — galería con "burbuja" en hover/focus (efecto CSS
+   * puro, ver .galeria-item:hover en styles.css) y lightbox al clickear
+   * o tocar una foto, para verla más grande. El lightbox es un único
+   * nodo (#lightbox en index.html) que se reutiliza para las N fotos;
+   * guarda el índice actual para poder navegar con las flechas/teclado
+   * sin volver a abrir el modal. Al cerrar, devuelve el foco al botón
+   * que lo abrió (accesibilidad con teclado).
    * --------------------------------------------------------------- */
-  function initGaleriaZoom() {
+  function initGaleriaLightbox() {
     var items = $all(".galeria-item:not(.galeria-item--placeholder)");
-    if (!items.length) return;
+    var lightbox = $("[data-lightbox]");
+    if (!items.length || !lightbox) return;
 
-    function closeAll(except) {
-      items.forEach(function (item) {
-        if (item !== except) item.classList.remove("is-zoomed");
-      });
+    var img = $("[data-lightbox-img]", lightbox);
+    var caption = $("[data-lightbox-caption]", lightbox);
+    var current = 0;
+    var lastFocused = null;
+
+    function render() {
+      var source = $("img", items[current]);
+      if (!source) return;
+      img.src = source.currentSrc || source.src;
+      img.alt = source.alt;
+      caption.textContent = source.alt;
     }
 
-    items.forEach(function (item) {
+    function open(index) {
+      current = index;
+      lastFocused = document.activeElement;
+      render();
+      lightbox.hidden = false;
+      requestAnimationFrame(function () { lightbox.classList.add("is-open"); });
+      document.body.classList.add("has-lightbox");
+    }
+
+    function close() {
+      lightbox.classList.remove("is-open");
+      document.body.classList.remove("has-lightbox");
+      setTimeout(function () { lightbox.hidden = true; }, 200);
+      if (lastFocused) lastFocused.focus();
+    }
+
+    function step(delta) {
+      current = (current + delta + items.length) % items.length;
+      render();
+    }
+
+    items.forEach(function (item, index) {
       item.addEventListener("click", function (e) {
-        var alreadyZoomed = item.classList.contains("is-zoomed");
-        closeAll(item);
-        if (alreadyZoomed) {
-          item.classList.remove("is-zoomed");
-        } else {
-          item.classList.add("is-zoomed");
-          e.preventDefault();
-        }
+        e.preventDefault();
+        open(index);
       });
     });
 
-    document.addEventListener("click", function (e) {
-      if (!e.target.closest(".galeria-item")) closeAll();
+    $(".lightbox-close", lightbox).addEventListener("click", close);
+    $(".lightbox-nav--prev", lightbox).addEventListener("click", function () { step(-1); });
+    $(".lightbox-nav--next", lightbox).addEventListener("click", function () { step(1); });
+
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox) close();
     });
+
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeAll();
+      if (lightbox.hidden) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "ArrowRight") step(1);
     });
   }
 
@@ -243,7 +275,7 @@
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
-    safe(initGaleriaZoom, "initGaleriaZoom");
+    safe(initGaleriaLightbox, "initGaleriaLightbox");
     safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");
   }
