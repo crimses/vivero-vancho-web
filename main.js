@@ -174,7 +174,6 @@
     if (!items.length || !lightbox) return;
 
     var img = $("[data-lightbox-img]", lightbox);
-    var caption = $("[data-lightbox-caption]", lightbox);
     var current = 0;
     var lastFocused = null;
 
@@ -183,7 +182,6 @@
       if (!source) return;
       img.src = source.currentSrc || source.src;
       img.alt = source.alt;
-      caption.textContent = source.alt;
     }
 
     function open(index) {

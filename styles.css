@@ -765,25 +765,15 @@ body.has-lightbox { overflow: hidden; }
   max-width: 100%;
   max-height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .75rem;
 }
 .lightbox-figure img {
   display: block;
   max-width: 100%;
-  max-height: calc(100vh - 10rem);
+  max-height: calc(100vh - 8rem);
   width: auto;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .6);
-}
-.lightbox-figure figcaption {
-  color: var(--surface, #fff);
-  opacity: .85;
-  font-size: .9rem;
-  text-align: center;
-  max-width: 60ch;
 }
 .lightbox-close,
 .lightbox-nav {
