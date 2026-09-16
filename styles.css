@@ -611,10 +611,10 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 .marcas-track {
   display: flex;
   width: max-content;
-  /* 68s (el doble de los 34s originales) para mantener la misma velocidad
-     de desplazamiento ahora que cada copia repite el set de marcas 2 veces
-     (ver comentario en el HTML) — mismo criterio que .resenas-track. */
-  animation: marcas-scroll 68s linear infinite;
+  /* 92s para mantener ~33px/s (misma velocidad que el resto de los
+     carruseles tipo marquee del sitio) ahora que cada copia trae las 16
+     marcas reales en una sola tanda — ver comentario en el HTML. */
+  animation: marcas-scroll 92s linear infinite;
 }
 .marcas-track:hover,
 .marcas-track:focus-within {
@@ -644,14 +644,6 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-}
-.marca-logo--placeholder {
-  border: 1px dashed rgba(74, 52, 35, .35);
-  border-radius: 12px;
-  color: var(--text-soft);
-  font-weight: 700;
-  font-size: .85rem;
-  background: var(--surface);
 }
 
 /* --- Nosotros --- */
