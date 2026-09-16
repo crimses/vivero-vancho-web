@@ -596,6 +596,24 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   }
 }
 
+/* En celular las flechas de navegación (48px c/u) + el gap se comían casi
+   la mitad del ancho disponible, dejando la tarjeta angosta y la foto del
+   producto chiquita dentro de ella (a eso se suma el padding fijo de 2rem
+   sobre la imagen). Acá se achican flechas y separación para que la
+   tarjeta gane ancho, se sube el alto del recuadro de foto (de 4/3 a
+   cuadrado) para que haya más lugar vertical, y se baja el padding interno
+   — el resultado es una foto notablemente más grande sin tocar nada del
+   layout de escritorio (que ya usa sus propias reglas a partir de 700px). */
+@media (max-width: 699px) {
+  .rubros-spotlight { gap: .4rem; }
+  .rubros-nav { width: 38px; height: 38px; }
+  .rubros-nav .icon { width: 18px; height: 18px; }
+  .rubros-spotlight-media { aspect-ratio: 1 / 1; }
+  .rubros-spotlight-media img { padding: .9rem; }
+  .rubros-thumb { width: 100px; }
+  .rubros-thumb img { width: 72px; height: 72px; }
+}
+
 /* --- Marcas (carrusel infinito de logos) ---
    Mismo mecanismo que .resenas-track más abajo: .marcas-track contiene dos
    copias idénticas del set de logos una al lado de la otra y se anima
