@@ -185,11 +185,19 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   cursor: pointer;
   text-decoration: none;
   line-height: 1.2;
+  transition: background-color .25s ease, border-color .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease;
 }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
 .btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent-strong); }
+.btn-primary:hover { background: var(--accent-strong); box-shadow: 0 12px 24px -10px rgba(44, 90, 50, .55); }
 .btn-secondary { background: transparent; color: var(--accent-strong); border-color: var(--accent); }
-.btn-secondary:hover { background: var(--surface-alt); }
+.btn-secondary:hover { background: var(--surface-alt); box-shadow: 0 12px 24px -14px rgba(38, 36, 28, .35); }
+/* .icon fija su propio color (ver más abajo) para verse bien sobre fondos
+   claros en el resto del sitio; dentro de un botón tiene que heredar el
+   color del texto del botón (blanco en primary, verde en secondary) en vez
+   de pisarlo. */
+.btn .icon { color: inherit; }
 
 /* --- Hero --- */
 .hero {
@@ -670,11 +678,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 .nosotros-copy p { color: var(--text-soft); font-size: 1.15rem; }
 
 /* --- Nuestro mundo (galería de fotos reales) ---
-   Mosaico de 2 columnas en mobile y 4 en desktop, con la primera ficha
-   "destacada" ocupando el doble de ancho (y de alto, en desktop) para darle
-   jerarquía a la foto principal. Las fichas "próximamente" usan el mismo
-   trazo punteado que .resena-card (ver más abajo) para que se lean como
-   contenido en construcción y no como una foto rota.
+   Mosaico parejo de 2 columnas en mobile y 4 en desktop, todas las fichas
+   del mismo tamaño (sin foto "destacada" — se sacó, pedido del cliente).
+   Las fichas "próximamente" usan el mismo trazo punteado que .resena-card
+   (ver más abajo) para que se lean como contenido en construcción y no
+   como una foto rota.
    Cada foto real es un <button> (ver index.html): al pasar el mouse por
    arriba (o enfocarla con teclado) se agranda "en el lugar" tipo burbuja,
    subiendo por encima de las fichas vecinas con z-index. Al clickearla (o
@@ -699,10 +707,6 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   background: var(--sage);
   cursor: pointer;
   transition: transform .3s ease, box-shadow .3s ease;
-}
-.galeria-item--featured {
-  grid-column: span 2;
-  aspect-ratio: 16 / 9;
 }
 .galeria-item img {
   width: 100%;
@@ -735,7 +739,6 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 @media (min-width: 700px) {
   .galeria-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; }
   .galeria-item { aspect-ratio: auto; }
-  .galeria-item--featured { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
 }
 
 /* --- Lightbox de la galería ---
@@ -935,50 +938,16 @@ body.has-lightbox { overflow: hidden; }
 }
 .map-frame iframe { width: 100%; height: 100%; min-height: 320px; border: 0; display: block; }
 
-/* --- Formulario de contacto --- */
-.contact-grid { display: grid; gap: 2.5rem; }
-@media (min-width: 860px) {
-  .contact-grid { grid-template-columns: .9fr 1.1fr; }
-}
-.contact-note {
-  background: var(--tierra-tint);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--tierra);
-  border-radius: 16px;
-  padding: 1.5rem 1.75rem;
-  color: var(--text-soft);
-  font-size: 1.02rem;
-}
-.contact-form {
+/* --- Contacto: botones directos a WhatsApp/Instagram (sin formulario,
+   ver comentario en index.html) --- */
+.contact-actions {
   display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  max-width: 520px;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
-.form-row label {
-  display: block;
-  font-weight: 700;
-  margin-bottom: .4rem;
-  color: var(--text);
-}
-.form-row input,
-.form-row textarea {
-  width: 100%;
-  padding: .85rem .9rem;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
-  font-size: 1.05rem;
-}
-.form-row input:focus,
-.form-row textarea:focus {
-  border-color: var(--accent);
-  outline: none;
-}
-.form-status { min-height: 1.4rem; font-size: 1rem; font-weight: 700; color: var(--text-soft); }
-.form-status.is-success { color: var(--accent-strong); }
+.btn-contact { padding: 1.1rem 2.2rem; font-size: 1.1rem; }
+.btn-contact .icon { width: 22px; height: 22px; transition: transform .25s ease; }
+.btn-contact:hover .icon { transform: scale(1.12); }
 
 /* --- Footer --- */
 .footer {

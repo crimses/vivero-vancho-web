@@ -229,44 +229,6 @@
   }
 
   /* ---------------------------------------------------------------
-   * Formulario de contacto — arranca simulado.
-   * Cuando exista el endpoint de Formspree y el mail de destino real del
-   * cliente (ver skill, Fase 4), reemplazar el bloque marcado
-   * "TODO backend" por un fetch() real.
-   * --------------------------------------------------------------- */
-  function initContactForm() {
-    var form = $("[data-contact-form]");
-    if (!form) return;
-    var status = $("[data-form-status]", form);
-    var btn = $('button[type="submit"]', form);
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-
-      if (btn) btn.disabled = true;
-      if (status) {
-        status.textContent = "Enviando…";
-        status.classList.remove("is-success");
-      }
-
-      // TODO backend: reemplazar este setTimeout por un fetch() real a
-      // Formspree (u otro servicio) cuando exista el endpoint y el mail
-      // de destino real del cliente.
-      setTimeout(function () {
-        var emailValue = form.querySelector('[type="email"]');
-        if (status) {
-          status.textContent = "¡Listo! Te vamos a responder a la brevedad" +
-            (emailValue && emailValue.value ? " a " + emailValue.value : "") + ".";
-          status.classList.add("is-success");
-        }
-        if (btn) btn.disabled = false;
-        form.reset();
-      }, 900);
-    });
-  }
-
-  /* ---------------------------------------------------------------
    * Boot
    * --------------------------------------------------------------- */
   function boot() {
@@ -274,7 +236,6 @@
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
     safe(initGaleriaLightbox, "initGaleriaLightbox");
-    safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");
   }
 
