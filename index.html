@@ -305,7 +305,12 @@
        marca porque su isologo es blanco y se volvería invisible sobre el
        fondo crema del sitio. Sólo la primera copia queda accesible a
        lectores de pantalla; la segunda tiene aria-hidden="true" porque es
-       una repetición "fantasma" sólo para el loop visual. -->
+       una repetición "fantasma" sólo para el loop visual. Sin
+       loading="lazy" a propósito: el navegador decide cuándo cargar una
+       imagen lazy según su posición en el layout, pero acá las imágenes se
+       mueven todo el tiempo vía CSS transform (no scroll real), así que esa
+       heurística llega tarde y el logo aparece de golpe a mitad de
+       recorrido en vez de estar ya cargado. -->
   <section id="marcas" class="section">
     <div class="container">
       <div class="section-head">
@@ -317,40 +322,40 @@
     <div class="marcas-track-wrap" data-marcas-track-wrap>
       <div class="marcas-track" data-marcas-track>
         <div class="marcas-set">
-          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="Logo de Glacoxan" width="242" height="73" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="Logo de Terrafertil" width="215" height="83" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="Logo de Top Crop" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/blum.png" alt="Logo de Blum S.A." width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/matri.png" alt="Logo de Matri" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="Logo de Penn Plax" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="Logo de Claratec" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/hth.png" alt="Logo de hth" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="Logo de Bremen" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="Logo de Rehau" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="Logo de Tetra" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="Logo de prodac" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="Logo de Mamboretá" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="Logo de Vamp Alquimia Natural" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="Logo de Bayer" width="400" height="200" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="Logo de Namaste" width="400" height="200" loading="lazy"></div>
+          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="Logo de Glacoxan" width="242" height="73"></div>
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="Logo de Terrafertil" width="215" height="83"></div>
+          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="Logo de Top Crop" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt="Logo de Blum S.A." width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/matri.png" alt="Logo de Matri" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="Logo de Penn Plax" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="Logo de Claratec" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt="Logo de hth" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="Logo de Bremen" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="Logo de Rehau" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="Logo de Tetra" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="Logo de prodac" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="Logo de Mamboretá" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="Logo de Vamp Alquimia Natural" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="Logo de Bayer" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="Logo de Namaste" width="400" height="200"></div>
         </div>
         <div class="marcas-set" aria-hidden="true">
-          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/blum.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/matri.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/hth.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="" loading="lazy"></div>
-          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="" loading="lazy"></div>
+          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/matri.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt=""></div>
         </div>
       </div>
     </div>
