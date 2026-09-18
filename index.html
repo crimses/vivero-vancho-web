@@ -8,7 +8,16 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Fraunces (títulos) va con display=optional: si no llega a tiempo, la
+     página se queda con la fuente de reemplazo para esa carga en vez de
+     cambiarla después — eso es lo que causaba el "salto" al entrar desde
+     el celular con conexiones más lentas (el texto se reacomoda al pasar
+     de la fuente de reemplazo a Fraunces, que tiene métricas bien
+     distintas). Nunito Sans (texto de cuerpo) se deja en swap porque ahí
+     el cambio de fuente es mucho más sutil y preferimos que sí se vea
+     aunque tarde un poco más en llegar. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -203,7 +212,7 @@
             </div>
             <div class="rubros-spotlight-body">
               <h3 data-spotlight-title>Plantas</h3>
-              <p data-spotlight-text>El corazón de Vivero Vancho: variedad de plantas de interior y exterior para cada rincón de tu casa.</p>
+              <p data-spotlight-text>El corazón de Vivero Vancho: una gran variedad de plantas de interior y exterior, para cada rincón de tu casa, tu balcón o tu jardín. Te asesoramos para elegir la que mejor se adapte a la luz y el espacio que tenés.</p>
             </div>
           </div>
           <button type="button" class="rubros-nav rubros-nav--next" data-rubros-next aria-label="Rubro siguiente">
@@ -215,7 +224,7 @@
             data-img="assets/rubros/plantas.png"
             data-alt="Foto de una planta de interior frondosa en maceta"
             data-title="Plantas"
-            data-text="El corazón de Vivero Vancho: variedad de plantas de interior y exterior para cada rincón de tu casa.">
+            data-text="El corazón de Vivero Vancho: una gran variedad de plantas de interior y exterior, para cada rincón de tu casa, tu balcón o tu jardín. Te asesoramos para elegir la que mejor se adapte a la luz y el espacio que tenés.">
             <img src="assets/rubros/plantas.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Plantas</span>
           </button>
@@ -223,7 +232,7 @@
             data-img="assets/rubros/tierra-sustratos.png"
             data-alt="Foto de una bolsa de tierra para jardín de Terrafertil"
             data-title="Tierra y sustratos"
-            data-text="Tierra de Terrafertil y sustratos para que tus plantas arranquen bien desde la maceta.">
+            data-text="Tierra de Terrafertil y sustratos de calidad, pensados para que tus plantas arranquen bien desde el primer día en la maceta. Tenemos distintas mezclas según lo que vayas a plantar, para que no te falte nada.">
             <img src="assets/rubros/tierra-sustratos.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Tierra y sustratos</span>
           </button>
@@ -231,7 +240,7 @@
             data-img="assets/rubros/mantenimiento.png"
             data-alt="Foto de una regadera para el riego y cuidado de plantas"
             data-title="Mantenimiento de plantas"
-            data-text="Fertilizantes, herbicidas y agroquímicos para cuidar lo que ya tenés en casa.">
+            data-text="Fertilizantes, herbicidas y agroquímicos para cuidar lo que ya tenés en casa y que tus plantas se mantengan sanas todo el año. Te asesoramos sobre qué producto usar según la plaga o la carencia que tengan.">
             <img src="assets/rubros/mantenimiento.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Mantenimiento</span>
           </button>
@@ -239,7 +248,7 @@
             data-img="assets/rubros/macetas.png"
             data-alt="Foto de una maceta de plástico color naranja con plato"
             data-title="Macetas"
-            data-text="Macetas de barro y de fibrocemento, en distintos tamaños y estilos.">
+            data-text="Macetas de barro y de fibrocemento, en distintos tamaños, formas y estilos, para que encuentres la que mejor combine con tu espacio. Ideales tanto para tus plantas de interior como para el jardín o el balcón.">
             <img src="assets/rubros/macetas.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Macetas</span>
           </button>
@@ -247,7 +256,7 @@
             data-img="assets/rubros/muebles-exterior.png"
             data-alt="Foto de una mesa y sillas plegables con sombrilla para exterior"
             data-title="Muebles de exterior"
-            data-text="Reposeras, mesas de plástico y de metal, y sillas para tu patio o balcón.">
+            data-text="Reposeras, mesas de plástico y de metal, sillas y otros muebles pensados para tu patio, balcón o jardín. Buscamos que sean resistentes y cómodos, para que disfrutes tu espacio al aire libre todo el año.">
             <img src="assets/rubros/muebles-exterior.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Muebles de exterior</span>
           </button>
@@ -255,7 +264,7 @@
             data-img="assets/rubros/decoracion-jardin.png"
             data-alt="Foto de un gnomo de jardín con un farol"
             data-title="Decoración de jardín"
-            data-text="Gnomos, budas, perros de jardín y otros adornos para darle personalidad a tu espacio verde.">
+            data-text="Gnomos, budas, perros de jardín y otros adornos para darle personalidad a tu espacio verde. Detalles pensados para completar el jardín que ya tenés armado o para darle un toque distinto al que estás empezando.">
             <img src="assets/rubros/decoracion-jardin.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Decoración de jardín</span>
           </button>
@@ -263,7 +272,7 @@
             data-img="assets/rubros/camping.png"
             data-alt="Foto de una carpa de camping para varias personas"
             data-title="Camping"
-            data-text="Artículos de camping para tu próxima escapada.">
+            data-text="Artículos de camping para tu próxima escapada: carpas, reposeras, mates y todo lo que necesitás para pasar unos días al aire libre, sin tener que ir de local en local buscando cada cosa.">
             <img src="assets/rubros/camping.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Camping</span>
           </button>
@@ -271,7 +280,7 @@
             data-img="assets/rubros/acuario.png"
             data-alt="Foto de un acuario con pez dorado y plantas acuáticas"
             data-title="Acuario e insumos"
-            data-text="Todo lo necesario para armar y mantener tu acuario.">
+            data-text="Todo lo necesario para armar y mantener tu acuario: peceras, filtros, alimento y accesorios para que tus peces vivan en un ambiente sano. También te asesoramos si estás por armar tu primer acuario.">
             <img src="assets/rubros/acuario.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Acuario e insumos</span>
           </button>
@@ -279,7 +288,7 @@
             data-img="assets/rubros/piscinas.png"
             data-alt="Foto de un kit de limpieza y mantenimiento para piscinas"
             data-title="Insumos para piscinas"
-            data-text="Productos para mantener tu pileta lista todo el verano.">
+            data-text="Productos para mantener tu pileta lista todo el verano: cloro, clarificantes y todo lo necesario para que el agua esté siempre limpia y en condiciones, sin sorpresas cuando llega el calor.">
             <img src="assets/rubros/piscinas.png" alt="" width="1024" height="1024" loading="lazy">
             <span>Insumos para piscinas</span>
           </button>

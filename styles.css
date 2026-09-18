@@ -495,6 +495,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--sage);
+  /* Sin esto, la pista implícita de .rubros-spotlight-card (grid, sin
+     columnas explícitas en mobile) se dimensiona por el "min-content" más
+     ancho entre sus items — y como el título de algunos rubros trae una
+     palabra larga sin espacios ("Mantenimiento", "Decoración"), esa
+     palabra empujaba la columna más ancha de lo que el card realmente
+     mide, y esta foto (aspect-ratio 1:1, se estira para llenar la
+     columna) terminaba desbordando su propio contenedor — visible como
+     otro salto de tamaño al llegar a esos dos rubros en el carrusel. */
+  min-width: 0;
 }
 @media (min-width: 700px) {
   .rubros-spotlight-media { aspect-ratio: auto; height: 100%; min-height: 320px; }
@@ -507,7 +516,24 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   display: block;
 }
 
-.rubros-spotlight-body { padding: 2.75rem 1.75rem 1.75rem; }
+/* min-height fijo a propósito: en mobile (antes de los 700px de arriba)
+   este bloque no tiene una columna hermana que lo estire, y el título +
+   descripción de cada rubro cambian mucho de largo entre uno y otro
+   ("Camping" vs. "Muebles de exterior"). Probamos que el alto se ajustara
+   al contenido de cada uno (achicando/agrandando el bloque al cambiar de
+   rubro) pero aunque el cambio en sí no se viera, la página igual corría
+   todo lo de abajo (marcas, nosotros, etc.) en cada ciclo del carrusel —
+   el problema nunca fue que SE VIERA el salto, sino que el alto de la
+   página cambiaba. La única forma de que nada de abajo se mueva es que
+   este bloque mida siempre lo mismo. 380px cubre el caso más alto medido
+   (371px a 320px de ancho, el rubro con texto más largo); display:flex +
+   justify-content:center reparte el espacio de sobra arriba y abajo del
+   texto en los rubros más cortos, en vez de dejarlo como un hueco colgando
+   debajo. */
+.rubros-spotlight-body {
+  padding: 2.75rem 1.75rem 1.75rem;
+  min-width: 0;
+}
 .rubros-spotlight-body h3 { font-size: 1.5rem; margin: 0 0 .6rem; }
 .rubros-spotlight-body p { color: var(--text-soft); margin: 0; font-size: 1.08rem; }
 
@@ -612,6 +638,17 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .rubros-spotlight-media img { padding: .9rem; }
   .rubros-thumb { width: 100px; }
   .rubros-thumb img { width: 72px; height: 72px; }
+  /* min-height fijo a propósito: acá abajo de los 700px de arriba, este
+     bloque no tiene una columna hermana que lo estire, así que su alto
+     depende del texto de cada rubro — y ese alto también depende del
+     ANCHO real de pantalla (a 320px un texto envuelve en más líneas que
+     a 400px), así que un solo valor fijo en CSS no sirve para todos los
+     celulares por igual: o sobra espacio en los más anchos, o no
+     alcanza en los más angostos. El valor real se calcula en JS
+     (updateMinHeight en main.js, dentro de initRubrosCarousel) probando
+     los 9 textos a cada ancho y quedándose con el más alto — acá sólo
+     queda un mínimo de respaldo bajo, por si JS no llegara a correr. */
+  .rubros-spotlight-body { min-height: 200px; }
 }
 
 /* --- Marcas (carrusel infinito de logos) ---
@@ -619,13 +656,39 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
    copias idénticas del set de logos una al lado de la otra y se anima
    corriéndose -50% de su ancho total (que es exactamente el ancho de una
    copia), así el corte entre una vuelta y la siguiente no se nota. Se
-   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion. */
+   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion.
+   El desvanecido en los bordes NO usa mask-image a propósito: Chrome para
+   Android tiene bugs de renderizado conocidos con mask-image sobre un
+   elemento con una animación por transform corriendo todo el tiempo. En
+   su lugar, dos pseudo-elementos pintan un degradé del color de fondo de
+   la sección hacia transparente, encima de los logos en cada punta.
+   Sacar el mask-image no alcanzó: el cliente lo siguió viendo fallar en
+   el celular (algunos logos directamente no se pintaban, no solo se
+   recortaban en el borde) — mismo tipo de bug de Chrome para Android,
+   pero con la animación en sí, no con mask-image. Como no hay forma de
+   probar esto de verdad sin un Android físico, la solución robusta es
+   sacar la animación de mobile directamente (ver el media query de abajo)
+   y dejar la tira como scroll horizontal nativo (se desliza con el dedo)
+   — sin animación corriendo, no hay bug de renderizado posible. Desktop
+   sigue con el auto-scroll de siempre, porque ahí nunca se reportó el
+   problema. */
 .marcas-track-wrap {
+  position: relative;
   overflow: hidden;
   margin-top: 1rem;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+.marcas-track-wrap::before,
+.marcas-track-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6%;
+  z-index: 2;
+  pointer-events: none;
+}
+.marcas-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.marcas-track-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
 .marcas-track {
   display: flex;
   width: max-content;
@@ -662,6 +725,36 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+@media (max-width: 699px) {
+  /* El cliente confirmó que, con la animación CSS y los degradés de los
+     bordes sacados (versión sin nada superpuesto ni animado), los 16
+     logos se ven bien al recorrer la tira con el dedo — el bug de que
+     desaparecían quedó resuelto. Sin animación CSS, el auto-scroll ahora
+     lo maneja JS moviendo scrollLeft directamente (ver
+     initMarcasAutoScroll en main.js) — un mecanismo de renderizado
+     distinto al que fallaba. overflow-x:auto sigue habilitado para que
+     el usuario pueda arrastrar la tira con el dedo en cualquier momento,
+     además del auto-scroll. Sin -webkit-overflow-scrolling:touch a
+     propósito: esa propiedad mueve el scroll a un hilo aparte con
+     inercia propia en iOS, y pelea con los cambios de scrollLeft que
+     hace JS por su cuenta — el auto-scroll se sentía "trabado" y no
+     llegaba a completar la vuelta con ella puesta. iOS moderno ya
+     scrollea con inercia por default sin necesitarla. */
+  .marcas-track-wrap {
+    overflow-x: auto;
+  }
+  /* Los degradés de los bordes (::before/::after) siguen sin mostrarse
+     acá: son position:absolute + z-index encima del contenido, y como
+     todavía no probamos si son parte de lo que causaba el bug (se
+     sacaron junto con mask-image y la animación, los tres a la vez),
+     por las dudas los dejamos afuera en vez de arriesgarnos a traer de
+     vuelta el problema por algo puramente decorativo. */
+  .marcas-track-wrap::before,
+  .marcas-track-wrap::after {
+    display: none;
+  }
+  .marcas-track { animation: none; }
 }
 
 /* --- Nosotros --- */
@@ -867,11 +960,27 @@ body.has-lightbox { overflow: hidden; }
    desplazamiento de siempre (~50px/s) ahora que el recorrido es más
    largo al haber más tarjetas por copia. */
 .resenas-track-wrap {
+  position: relative;
   overflow: hidden;
   margin-top: 2.5rem;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+/* Sin mask-image a propósito — mismo motivo que .marcas-track-wrap más
+   arriba (bug de Chrome para Android que hace desaparecer por completo un
+   elemento enmascarado con una animación por transform corriendo todo el
+   tiempo). Los pseudo-elementos logran el mismo desvanecido en los bordes
+   sin usar mask-image. */
+.resenas-track-wrap::before,
+.resenas-track-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6%;
+  z-index: 2;
+  pointer-events: none;
+}
+.resenas-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.resenas-track-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
 .resenas-track {
   display: flex;
   width: max-content;
@@ -892,6 +1001,22 @@ body.has-lightbox { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) {
   .resenas-track { animation: none; }
+}
+/* Mismo criterio que .marcas-track (ver comentario ahí): en mobile se saca
+   la animación y los degradés de los bordes, y queda como scroll
+   horizontal nativo y nada más — todavía no se reportó ningún problema
+   acá, pero usa el mismo mecanismo que marcas, que sí falló. */
+@media (max-width: 699px) {
+  .resenas-track-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .resenas-track-wrap::before,
+  .resenas-track-wrap::after {
+    display: none;
+  }
+  .resenas-track { animation: none; }
+  .resenas-set[aria-hidden="true"] { display: none; }
 }
 .resena-card {
   position: relative;

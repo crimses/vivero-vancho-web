@@ -61,6 +61,7 @@
     if (!root) return;
 
     var spotlight = $("[data-rubros-spotlight]", root);
+    var body = $(".rubros-spotlight-body", root);
     var img = $("[data-spotlight-img]", root);
     var title = $("[data-spotlight-title]", root);
     var text = $("[data-spotlight-text]", root);
@@ -68,7 +69,7 @@
     var prevBtn = $("[data-rubros-prev]", root);
     var nextBtn = $("[data-rubros-next]", root);
     var announce = $("[data-rubros-announce]", root);
-    if (!spotlight || !img || !title || !text || !thumbs.length) return;
+    if (!spotlight || !body || !img || !title || !text || !thumbs.length) return;
 
     var reduceMotion = window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -120,6 +121,46 @@
       }, FADE_MS);
     }
 
+    // El bloque de texto necesita una altura mínima FIJA en mobile (donde
+    // no tiene una columna hermana que lo estire) para que la página no
+    // corra todo lo de abajo cada vez que el carrusel cambia de rubro —
+    // el título y la descripción cambian de largo entre uno y otro. Un
+    // solo valor fijo en CSS no alcanza: a 320px de ancho un texto puede
+    // necesitar 660px, pero a 390-430px (celulares más comunes) el mismo
+    // texto envuelve en menos líneas y ese mismo valor deja un hueco
+    // enorme abajo — el alto "correcto" depende del ancho real de
+    // pantalla, no es un número fijo único. Por eso se mide acá, en JS,
+    // en vez de en styles.css: se prueban los 9 títulos/textos con
+    // min-height en 0 (para no arrastrar el valor de un cálculo previo),
+    // nos quedamos con el más alto de los nueve a ESTE ancho, y ese pasa
+    // a ser el mínimo fijo — así nunca hay hueco de más ni desborde,
+    // sea cual sea el celular. Se recalcula al cargar y si cambia el
+    // ancho (por ejemplo al rotar el celular).
+    function updateMinHeight() {
+      if (window.innerWidth >= 700) {
+        body.style.minHeight = "";
+        return;
+      }
+      var savedTitle = title.textContent;
+      var savedText = text.textContent;
+      body.style.minHeight = "0";
+      var max = 0;
+      thumbs.forEach(function (t) {
+        title.textContent = t.getAttribute("data-title") || "";
+        text.textContent = t.getAttribute("data-text") || "";
+        if (body.scrollHeight > max) max = body.scrollHeight;
+      });
+      title.textContent = savedTitle;
+      text.textContent = savedText;
+      body.style.minHeight = max + "px";
+    }
+
+    var resizeTimer = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateMinHeight, 150);
+    });
+
     function stopAutoplay() {
       if (timer) {
         clearInterval(timer);
@@ -156,7 +197,81 @@
     root.addEventListener("focusout", startAutoplay);
 
     render(current);
+    updateMinHeight();
     startAutoplay();
+  }
+
+  /* ---------------------------------------------------------------
+   * Marcas — auto-scroll en mobile con JS (scrollLeft nativo) en vez de
+   * la animación por CSS transform que usa desktop. En mobile, sacar
+   * mask-image y la animación CSS (ver comentarios en styles.css) no
+   * alcanzó para resolver un bug real de logos que dejaban de pintarse
+   * en el celular (confirmado en Chrome y Safari, en dos dispositivos
+   * distintos) — sólo se resolvió sacando la animación por completo.
+   * Como el cliente prefiere que el carrusel se mueva solo, esto repone
+   * el auto-scroll con un mecanismo distinto de raíz: en vez de animar
+   * un transform con CSS, movemos el scroll nativo (scrollLeft) a mano.
+   * Usa setInterval (no requestAnimationFrame): es el mismo mecanismo
+   * que ya usa el autoplay de Rubros más arriba, con el que sabemos que
+   * no hay problemas — una primera versión con requestAnimationFrame no
+   * se movía nada en el celular real, así que se cambió a algo ya
+   * probado en este mismo sitio en vez de seguir con lo que fallaba. El
+   * salto al reiniciar el loop es instantáneo (scrollLeft -= la mitad
+   * del ancho total, que es el ancho de una tanda) en vez de una
+   * transición, para que no se note el corte — mismo truco que usaba la
+   * animación CSS. Se pausa mientras el usuario toca/arrastra la tira
+   * (touchcancel Y touchend, porque el caso normal es que alguien la
+   * toque de pasada al scrollear la página — un gesto que termina en
+   * scroll vertical dispara touchcancel, no touchend), y no corre nada
+   * si el sistema pide prefers-reduced-motion. Desktop no se toca: sigue
+   * con la animación CSS de siempre, que nunca dio problemas. */
+  function initMarcasAutoScroll() {
+    var wrap = $("[data-marcas-track-wrap]");
+    if (!wrap) return;
+    if (window.innerWidth >= 700) return;
+
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    var TICK_MS = 30;
+    var STEP_PX = 1; // 1px cada 30ms ≈ 33px/s, misma velocidad que el resto
+    if (!wrap.scrollWidth) return;
+
+    var paused = false;
+    var resumeTimer = null;
+
+    function tick() {
+      if (paused) return;
+      // Se vuelve a medir scrollWidth en cada paso (no se guarda una sola
+      // vez al arrancar): así, si el ancho real cambia un poco respecto
+      // a lo medido al cargar la página, el punto de "vuelta al principio"
+      // siempre coincide con la mitad real de la tira en vez de uno viejo
+      // que quedó corto o largo.
+      var halfWidth = wrap.scrollWidth / 2;
+      wrap.scrollLeft += STEP_PX;
+      if (wrap.scrollLeft >= halfWidth) {
+        wrap.scrollLeft -= halfWidth;
+      }
+    }
+
+    function pause() {
+      paused = true;
+      clearTimeout(resumeTimer);
+    }
+    function scheduleResume() {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function () { paused = false; }, 2500);
+    }
+
+    wrap.addEventListener("touchstart", pause, { passive: true });
+    wrap.addEventListener("touchend", scheduleResume, { passive: true });
+    wrap.addEventListener("touchcancel", scheduleResume, { passive: true });
+    wrap.addEventListener("pointerdown", pause);
+    wrap.addEventListener("pointerup", scheduleResume);
+    wrap.addEventListener("pointercancel", scheduleResume);
+
+    setInterval(tick, TICK_MS);
   }
 
   /* ---------------------------------------------------------------
@@ -235,6 +350,7 @@
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
+    safe(initMarcasAutoScroll, "initMarcasAutoScroll");
     safe(initGaleriaLightbox, "initGaleriaLightbox");
     document.documentElement.classList.add("is-ready");
   }
