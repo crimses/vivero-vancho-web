@@ -1040,26 +1040,15 @@ body.has-lightbox { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .resenas-track { animation: none; }
 }
-/* En mobile se saca la animación y los degradés de los bordes, y queda
-   como scroll horizontal nativo y nada más — acá nunca se reportó ningún
-   problema, pero usa el mismo mecanismo (mask-image no, animación CSS con
-   transform sí) que en su momento falló en el carrusel de Marcas (ver
-   comentario largo en .marcas-track-wrap más arriba, que volvió a la
-   animación CSS en mobile porque la alternativa por JS resultó menos
-   fluida). Como acá nunca hubo queja, se deja la versión más conservadora
-   sin animación en vez de arriesgar por las dudas. */
-@media (max-width: 699px) {
-  .resenas-track-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .resenas-track-wrap::before,
-  .resenas-track-wrap::after {
-    display: none;
-  }
-  .resenas-track { animation: none; }
-  .resenas-set[aria-hidden="true"] { display: none; }
-}
+/* Antes se sacaba la animación en mobile por las dudas (mismo mecanismo
+   que en su momento falló en el carrusel de Marcas — ver comentario
+   largo en .marcas-track-wrap más arriba). Pero la causa real de esa
+   falla resultó ser animar muchas imágenes reales distintas a la vez
+   con CSS transform (confirmado con el cliente: ni el peso de las
+   imágenes ni la cantidad de marcas cambiaban el resultado). Acá no hay
+   ninguna imagen — las tarjetas son sólo texto — así que no aplica ese
+   riesgo, y mobile sigue igual que desktop (animación + degradés).
+   El cliente pidió específicamente que esto se mueva solo en mobile. */
 .resena-card {
   position: relative;
   background: var(--surface);

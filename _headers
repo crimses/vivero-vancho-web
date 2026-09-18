@@ -1,0 +1,18 @@
+# Cloudflare Pages sirve /styles.css y /main.js con cache de 4hs por
+# default (igual que las imágenes). Eso está bien para las imágenes,
+# que casi no cambian, pero para CSS/JS es un problema real: el sitio
+# se sigue tocando seguido, e index.html SÍ se revalida siempre
+# (Cloudflare ya le pone max-age=0 por su cuenta) — así que después de
+# un deploy, un visitante puede recibir el HTML nuevo pero el CSS/JS
+# viejo de su caché durante horas, con resultados rotos (justo lo que
+# pasó: un componente nuevo en el HTML sin las reglas CSS que lo
+# armaban). Achicar el cache de estos dos archivos a "siempre revalidar"
+# soluciona eso: el navegador sigue pudiendo usar su copia cacheada,
+# pero primero le pregunta al servidor si cambió (con ETag) — si no
+# cambió, la respuesta es un 304 chiquito y rápido, casi tan barato
+# como no preguntar nada.
+/styles.css
+  Cache-Control: public, max-age=0, must-revalidate
+
+/main.js
+  Cache-Control: public, max-age=0, must-revalidate
