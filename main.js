@@ -202,76 +202,82 @@
   }
 
   /* ---------------------------------------------------------------
-   * Marcas — auto-scroll en mobile con JS (scrollLeft nativo) en vez de
-   * la animación por CSS transform que usa desktop. En mobile, sacar
-   * mask-image y la animación CSS (ver comentarios en styles.css) no
-   * alcanzó para resolver un bug real de logos que dejaban de pintarse
-   * en el celular (confirmado en Chrome y Safari, en dos dispositivos
-   * distintos) — sólo se resolvió sacando la animación por completo.
-   * Como el cliente prefiere que el carrusel se mueva solo, esto repone
-   * el auto-scroll con un mecanismo distinto de raíz: en vez de animar
-   * un transform con CSS, movemos el scroll nativo (scrollLeft) a mano.
-   * Usa setInterval (no requestAnimationFrame): es el mismo mecanismo
-   * que ya usa el autoplay de Rubros más arriba, con el que sabemos que
-   * no hay problemas — una primera versión con requestAnimationFrame no
-   * se movía nada en el celular real, así que se cambió a algo ya
-   * probado en este mismo sitio en vez de seguir con lo que fallaba. El
-   * salto al reiniciar el loop es instantáneo (scrollLeft -= la mitad
-   * del ancho total, que es el ancho de una tanda) en vez de una
-   * transición, para que no se note el corte — mismo truco que usaba la
-   * animación CSS. Se pausa mientras el usuario toca/arrastra la tira
-   * (touchcancel Y touchend, porque el caso normal es que alguien la
-   * toque de pasada al scrollear la página — un gesto que termina en
-   * scroll vertical dispara touchcancel, no touchend), y no corre nada
-   * si el sistema pide prefers-reduced-motion. Desktop no se toca: sigue
-   * con la animación CSS de siempre, que nunca dio problemas. */
-  function initMarcasAutoScroll() {
-    var wrap = $("[data-marcas-track-wrap]");
-    if (!wrap) return;
-    if (window.innerWidth >= 700) return;
+   * Marcas en mobile — rotador por rubro. Ver el comentario largo sobre
+   * Marcas en el HTML y en styles.css: animar con CSS transform muchas
+   * imágenes reales distintas a la vez rompía en el celular del cliente
+   * sin importar el peso de las imágenes, así que en mobile se reemplaza
+   * el carrusel por este rotador — agrupa las marcas por rubro y nunca
+   * muestra más de 3 imágenes reales a la vez, sin ningún transform
+   * animándolas (sólo un crossfade de opacidad entre grupos).
+   *
+   * A diferencia de initRubrosCarousel de acá arriba, esto NO necesita
+   * el patrón "agregar clase is-fading, esperar, recién ahí cambiar el
+   * contenido": ese patrón existe para poder cambiar CONTENIDO a mitad
+   * de la transición sin que se note (Rubros reusa un único elemento).
+   * Acá los 7 grupos ya existen de antemano en el HTML y están siempre
+   * en el render tree — activar uno y desactivar otro es un solo cambio
+   * de clase, y el crossfade lo resuelve el transition de CSS solo (ver
+   * .marcas-grupo en styles.css). Una primera versión sí usaba
+   * display:none/block por grupo (como Rubros con su contenido), pero
+   * un elemento no puede animar una propiedad en el mismo instante en
+   * que pasa a existir en el render tree — el fade-in nunca se veía.
+   * --------------------------------------------------------------- */
+  function initMarcasRotator() {
+    var root = $("[data-marcas-rotator]");
+    if (!root) return;
+
+    var groups = $all("[data-marcas-grupo]", root);
+    if (!groups.length) return;
 
     var reduceMotion = window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return;
 
-    var TICK_MS = 30;
-    var STEP_PX = 1; // 1px cada 30ms ≈ 33px/s, misma velocidad que el resto
-    if (!wrap.scrollWidth) return;
+    var current = groups.findIndex(function (g) {
+      return g.classList.contains("is-active");
+    });
+    if (current < 0) current = 0;
 
-    var paused = false;
-    var resumeTimer = null;
+    // 6s (más que los 4.5s de Rubros): acá sólo hay un par de logos y una
+    // palabra para leer, pero el cliente lo sintió "muy rápido" igual —
+    // le dejamos más aire para reconocer el rubro antes de que cambie.
+    var AUTOPLAY_MS = 6000;
+    var timer = null;
 
-    function tick() {
-      if (paused) return;
-      // Se vuelve a medir scrollWidth en cada paso (no se guarda una sola
-      // vez al arrancar): así, si el ancho real cambia un poco respecto
-      // a lo medido al cargar la página, el punto de "vuelta al principio"
-      // siempre coincide con la mitad real de la tira en vez de uno viejo
-      // que quedó corto o largo.
-      var halfWidth = wrap.scrollWidth / 2;
-      wrap.scrollLeft += STEP_PX;
-      if (wrap.scrollLeft >= halfWidth) {
-        wrap.scrollLeft -= halfWidth;
+    function render(index) {
+      groups.forEach(function (g, i) {
+        var active = i === index;
+        g.classList.toggle("is-active", active);
+        g.setAttribute("aria-hidden", active ? "false" : "true");
+      });
+    }
+
+    function setActive(index) {
+      index = ((index % groups.length) + groups.length) % groups.length;
+      if (index === current) return;
+      current = index;
+      render(index);
+    }
+
+    function stopAutoplay() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
       }
     }
-
-    function pause() {
-      paused = true;
-      clearTimeout(resumeTimer);
-    }
-    function scheduleResume() {
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(function () { paused = false; }, 2500);
+    function startAutoplay() {
+      if (reduceMotion || timer || window.innerWidth >= 700) return;
+      timer = setInterval(function () {
+        setActive(current + 1);
+      }, AUTOPLAY_MS);
     }
 
-    wrap.addEventListener("touchstart", pause, { passive: true });
-    wrap.addEventListener("touchend", scheduleResume, { passive: true });
-    wrap.addEventListener("touchcancel", scheduleResume, { passive: true });
-    wrap.addEventListener("pointerdown", pause);
-    wrap.addEventListener("pointerup", scheduleResume);
-    wrap.addEventListener("pointercancel", scheduleResume);
+    window.addEventListener("resize", function () {
+      if (window.innerWidth >= 700) stopAutoplay();
+      else startAutoplay();
+    });
 
-    setInterval(tick, TICK_MS);
+    render(current);
+    startAutoplay();
   }
 
   /* ---------------------------------------------------------------
@@ -350,7 +356,7 @@
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
-    safe(initMarcasAutoScroll, "initMarcasAutoScroll");
+    safe(initMarcasRotator, "initMarcasRotator");
     safe(initGaleriaLightbox, "initGaleriaLightbox");
     document.documentElement.classList.add("is-ready");
   }

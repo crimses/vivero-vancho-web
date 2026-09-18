@@ -651,31 +651,40 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .rubros-spotlight-body { min-height: 200px; }
 }
 
-/* --- Marcas (carrusel infinito de logos) ---
-   Mismo mecanismo que .resenas-track más abajo: .marcas-track contiene dos
-   copias idénticas del set de logos una al lado de la otra y se anima
-   corriéndose -50% de su ancho total (que es exactamente el ancho de una
-   copia), así el corte entre una vuelta y la siguiente no se nota. Se
-   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion.
-   El desvanecido en los bordes NO usa mask-image a propósito: Chrome para
-   Android tiene bugs de renderizado conocidos con mask-image sobre un
-   elemento con una animación por transform corriendo todo el tiempo. En
-   su lugar, dos pseudo-elementos pintan un degradé del color de fondo de
-   la sección hacia transparente, encima de los logos en cada punta.
-   Sacar el mask-image no alcanzó: el cliente lo siguió viendo fallar en
-   el celular (algunos logos directamente no se pintaban, no solo se
-   recortaban en el borde) — mismo tipo de bug de Chrome para Android,
-   pero con la animación en sí, no con mask-image. Como no hay forma de
-   probar esto de verdad sin un Android físico, la solución robusta es
-   sacar la animación de mobile directamente (ver el media query de abajo)
-   y dejar la tira como scroll horizontal nativo (se desliza con el dedo)
-   — sin animación corriendo, no hay bug de renderizado posible. Desktop
-   sigue con el auto-scroll de siempre, porque ahí nunca se reportó el
-   problema. */
+/* --- Marcas ---
+   Dos implementaciones completamente distintas según el tamaño de
+   pantalla (ver @media más abajo de cada bloque) — no es la misma UI
+   adaptada, es un componente distinto para cada caso. Contexto completo
+   en el comentario del HTML: en mobile, animar con CSS transform muchas
+   imágenes reales distintas a la vez (32 instancias entre las dos copias
+   del carrusel) causaba un bug reproducible siempre igual — logos que se
+   cortaban o dejaban de pintarse, sin recuperarse — que no dependía del
+   peso de las imágenes (se probó bajarlas de 400×200 a 320×160 y no
+   cambió nada) sino de la cantidad de imágenes reales distintas
+   compuestas a la vez (con 16 fallaba enseguida, con 8 fallaba más
+   tarde pero seguía fallando). En vez de seguir bajando esa cantidad al
+   azar, .marcas-rotator agrupa las marcas por rubro y nunca muestra más
+   de 3 a la vez.
+
+   1) .marcas-track-wrap — carrusel infinito, sólo desktop (>=700px).
+   Mismo mecanismo que .resenas-track más abajo: .marcas-track contiene
+   dos copias idénticas del set de logos una al lado de la otra y se
+   anima corriéndose -50% de su ancho total (que es exactamente el ancho
+   de una copia), así el corte entre una vuelta y la siguiente no se
+   nota. Se pausa al pasar el mouse/foco y se desactiva con
+   prefers-reduced-motion. El desvanecido en los bordes NO usa mask-image
+   a propósito: Chrome para Android tiene bugs de renderizado conocidos
+   con mask-image sobre un elemento con una animación por transform
+   corriendo todo el tiempo. En su lugar, dos pseudo-elementos pintan un
+   degradé del color de fondo de la sección hacia transparente, encima de
+   los logos en cada punta. */
 .marcas-track-wrap {
   position: relative;
   overflow: hidden;
   margin-top: 1rem;
+}
+@media (max-width: 699px) {
+  .marcas-track-wrap { display: none; }
 }
 .marcas-track-wrap::before,
 .marcas-track-wrap::after {
@@ -726,35 +735,64 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   max-height: 100%;
   object-fit: contain;
 }
+
+/* 2) .marcas-rotator — sólo mobile (<700px), ver comentario largo más
+   arriba. Agrupa las marcas por rubro (definido por el cliente) y
+   muestra un grupo a la vez con un crossfade — mismo efecto "crece" que
+   .rubros-spotlight-media img (scale + opacity), calcado a pedido del
+   cliente. Nunca hay más de 3 imágenes reales en pantalla ni transform
+   animándolas, así que no hay margen para el bug del carrusel de arriba.
+
+   A diferencia de .rubros-spotlight (que reusa un único elemento y le
+   cambia el contenido), acá hay 7 grupos ya armados en el HTML. La
+   primera versión los mostraba/ocultaba con display:none↔block al
+   activarse — eso ROMPE la transición de entrada: un elemento no puede
+   animar una propiedad en el mismo instante en que pasa a existir en el
+   render tree, así que el fade-in nunca se veía (el cliente lo notó:
+   "aparece de golpe"). La solución de fondo, no un parche, es que los 7
+   grupos estén SIEMPRE en el render tree, apilados unos sobre otros en
+   la misma celda de grid (grid-area: 1/1), y que sólo la opacidad decida
+   cuál se ve — así todos tienen dónde "partir" para animar en cualquier
+   dirección, en cualquier momento. De paso, esto resuelve solo el
+   min-height que antes había que medir en JS: al estar los 7 grupos
+   siempre presentes compartiendo la misma fila del grid, esa fila mide
+   automáticamente lo que mida el más alto de los 7, sin necesidad de
+   JS. */
+.marcas-rotator {
+  display: none;
+}
 @media (max-width: 699px) {
-  /* El cliente confirmó que, con la animación CSS y los degradés de los
-     bordes sacados (versión sin nada superpuesto ni animado), los 16
-     logos se ven bien al recorrer la tira con el dedo — el bug de que
-     desaparecían quedó resuelto. Sin animación CSS, el auto-scroll ahora
-     lo maneja JS moviendo scrollLeft directamente (ver
-     initMarcasAutoScroll en main.js) — un mecanismo de renderizado
-     distinto al que fallaba. overflow-x:auto sigue habilitado para que
-     el usuario pueda arrastrar la tira con el dedo en cualquier momento,
-     además del auto-scroll. Sin -webkit-overflow-scrolling:touch a
-     propósito: esa propiedad mueve el scroll a un hilo aparte con
-     inercia propia en iOS, y pelea con los cambios de scrollLeft que
-     hace JS por su cuenta — el auto-scroll se sentía "trabado" y no
-     llegaba a completar la vuelta con ella puesta. iOS moderno ya
-     scrollea con inercia por default sin necesitarla. */
-  .marcas-track-wrap {
-    overflow-x: auto;
+  .marcas-rotator {
+    display: grid;
+    margin-top: 1.5rem;
   }
-  /* Los degradés de los bordes (::before/::after) siguen sin mostrarse
-     acá: son position:absolute + z-index encima del contenido, y como
-     todavía no probamos si son parte de lo que causaba el bug (se
-     sacaron junto con mask-image y la animación, los tres a la vez),
-     por las dudas los dejamos afuera en vez de arriesgarnos a traer de
-     vuelta el problema por algo puramente decorativo. */
-  .marcas-track-wrap::before,
-  .marcas-track-wrap::after {
-    display: none;
-  }
-  .marcas-track { animation: none; }
+}
+.marcas-grupo {
+  grid-area: 1 / 1;
+  align-self: center;
+  text-align: center;
+  opacity: 0;
+  transform: scale(.94);
+  pointer-events: none;
+  transition: opacity .4s ease, transform .45s ease;
+}
+.marcas-grupo.is-active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+/* .marcas-grupo-label lleva la clase .kicker (mismo "// trabajamos con"
+   de arriba) para que la tipografía sea consistente con el resto de la
+   página — el espaciado de acá abajo (.section .kicker) ya alcanza. */
+.marcas-grupo-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marcas-grupo { transition: none; }
 }
 
 /* --- Nosotros --- */
@@ -1002,10 +1040,14 @@ body.has-lightbox { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .resenas-track { animation: none; }
 }
-/* Mismo criterio que .marcas-track (ver comentario ahí): en mobile se saca
-   la animación y los degradés de los bordes, y queda como scroll
-   horizontal nativo y nada más — todavía no se reportó ningún problema
-   acá, pero usa el mismo mecanismo que marcas, que sí falló. */
+/* En mobile se saca la animación y los degradés de los bordes, y queda
+   como scroll horizontal nativo y nada más — acá nunca se reportó ningún
+   problema, pero usa el mismo mecanismo (mask-image no, animación CSS con
+   transform sí) que en su momento falló en el carrusel de Marcas (ver
+   comentario largo en .marcas-track-wrap más arriba, que volvió a la
+   animación CSS en mobile porque la alternativa por JS resultó menos
+   fluida). Como acá nunca hubo queja, se deja la versión más conservadora
+   sin animación en vez de arriesgar por las dudas. */
 @media (max-width: 699px) {
   .resenas-track-wrap {
     overflow-x: auto;
