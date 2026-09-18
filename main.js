@@ -202,6 +202,108 @@
   }
 
   /* ---------------------------------------------------------------
+   * Marcas en mobile — rotador por rubro, calcado a initRubrosCarousel
+   * de acá arriba (mismo patrón: fade + setInterval + updateMinHeight
+   * responsive al ancho real). Ver el comentario largo sobre Marcas en
+   * el HTML y en styles.css: animar con CSS transform muchas imágenes
+   * reales distintas a la vez rompía en el celular del cliente sin
+   * importar el peso de las imágenes, así que en mobile se reemplaza el
+   * carrusel por este rotador — agrupa las marcas por rubro y nunca
+   * muestra más de 3 imágenes reales a la vez, sin ningún transform
+   * animándolas (sólo un fade de opacidad entre grupos).
+   * --------------------------------------------------------------- */
+  function initMarcasRotator() {
+    var root = $("[data-marcas-rotator]");
+    if (!root) return;
+
+    var groups = $all("[data-marcas-grupo]", root);
+    if (!groups.length) return;
+
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var current = groups.findIndex(function (g) {
+      return g.classList.contains("is-active");
+    });
+    if (current < 0) current = 0;
+
+    var AUTOPLAY_MS = 4000;
+    var FADE_MS = 400;
+    var timer = null;
+
+    function render(index) {
+      groups.forEach(function (g, i) {
+        g.classList.toggle("is-active", i === index);
+      });
+    }
+
+    function setActive(index) {
+      index = ((index % groups.length) + groups.length) % groups.length;
+      if (index === current) return;
+      current = index;
+
+      if (reduceMotion) {
+        render(index);
+        return;
+      }
+
+      root.classList.add("is-fading");
+      setTimeout(function () {
+        render(index);
+        root.classList.remove("is-fading");
+      }, FADE_MS);
+    }
+
+    // Mismo motivo que updateMinHeight en initRubrosCarousel más arriba:
+    // los grupos tienen distinta cantidad de logos (1 a 3) y a anchos
+    // angostos pueden envolver en más líneas, así que la altura real
+    // varía de grupo a grupo y de celular a celular — se mide acá en vez
+    // de fijar un valor en CSS para que nunca sobre ni falte espacio.
+    function updateMinHeight() {
+      if (window.innerWidth >= 700) {
+        root.style.minHeight = "";
+        return;
+      }
+      root.style.minHeight = "0";
+      var max = 0;
+      groups.forEach(function (g) {
+        var wasActive = g.classList.contains("is-active");
+        if (!wasActive) g.classList.add("is-active");
+        if (g.scrollHeight > max) max = g.scrollHeight;
+        if (!wasActive) g.classList.remove("is-active");
+      });
+      root.style.minHeight = max + "px";
+    }
+
+    function stopAutoplay() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+    function startAutoplay() {
+      if (reduceMotion || timer || window.innerWidth >= 700) return;
+      timer = setInterval(function () {
+        setActive(current + 1);
+      }, AUTOPLAY_MS);
+    }
+
+    var resizeTimer = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        updateMinHeight();
+        if (window.innerWidth >= 700) stopAutoplay();
+        else startAutoplay();
+      }, 150);
+    });
+
+    render(current);
+    updateMinHeight();
+    startAutoplay();
+  }
+
+  /* ---------------------------------------------------------------
    * Nuestro mundo — galería con "burbuja" en hover/focus (efecto CSS
    * puro, ver .galeria-item:hover en styles.css) y lightbox al clickear
    * o tocar una foto, para verla más grande. El lightbox es un único
@@ -277,6 +379,7 @@
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
+    safe(initMarcasRotator, "initMarcasRotator");
     safe(initGaleriaLightbox, "initGaleriaLightbox");
     document.documentElement.classList.add("is-ready");
   }

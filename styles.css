@@ -651,49 +651,40 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .rubros-spotlight-body { min-height: 200px; }
 }
 
-/* --- Marcas (carrusel infinito de logos) ---
-   Mismo mecanismo que .resenas-track más abajo: .marcas-track contiene dos
-   copias idénticas del set de logos una al lado de la otra y se anima
-   corriéndose -50% de su ancho total (que es exactamente el ancho de una
-   copia), así el corte entre una vuelta y la siguiente no se nota. Se
-   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion.
-   Historial: en mobile probamos sacar la animación CSS del todo y mover
-   scrollLeft por JS (setInterval), porque en su momento la animación CSS
-   hacía que algunos logos dejaran de pintarse en el celular del cliente.
-   Ese reemplazo trajo un problema nuevo: scrollLeft manejado por JS desde
-   el hilo principal se siente notoriamente menos fluido que una animación
-   por transform (que corre en el hilo de composición) — el cliente lo
-   comparó con el carrusel de marcas de CRIMSES (mismo mecanismo que este,
-   animación CSS pura) y ese sí se ve fluido. Al volver a la animación CSS
-   en mobile, reapareció el bug de logos que se cortan/no pintan — a
-   diferencia de CRIMSES (que repite una sola imagen chica, un único
-   texture liviano), acá son 16 PNG reales distintos animándose a la vez,
-   32 instancias en pantalla entre las dos copias. Antes de volver a JS
-   (que ya sabemos que no queda fluido) se redujeron los PNG de 400×200 a
-   320×160 —su tamaño real de uso es un tile de 150×84, así que ya sobraba
-   resolución— para bajar la cantidad de píxeles que el celular tiene que
-   mantener compuestos todo el tiempo mientras la tira se anima. El
-   cliente probó esto y el bug pasó exactamente igual, punto por punto
-   (mismos logos, mismo orden, mismo final) — eso descarta que sea el
-   PESO de las imágenes y apunta a la CANTIDAD de imágenes reales
-   distintas compuestas a la vez. Por eso ahora el HTML sólo trae 8 de
-   las 16 marcas reales (ver comentario largo en el HTML) a modo de
-   prueba: si con menos marcas distintas el bug no aparece, confirma la
-   teoría y falta decidir con el cliente qué marcas mostrar de forma
-   permanente (¿rotar subconjuntos?, ¿elegir sólo 8?). Si aun así
-   reaparece, la cantidad de imágenes distintas tampoco es la causa y
-   habría que aceptar el trade-off: esta animación por CSS no es viable
-   en el celular del cliente con contenido real, y la única versión
-   confirmada sin bugs es el scroll nativo sin auto-movimiento.
-   El desvanecido en los bordes NO usa mask-image a propósito: Chrome para
-   Android tiene bugs de renderizado conocidos con mask-image sobre un
-   elemento con una animación por transform corriendo todo el tiempo. En
-   su lugar, dos pseudo-elementos pintan un degradé del color de fondo de
-   la sección hacia transparente, encima de los logos en cada punta. */
+/* --- Marcas ---
+   Dos implementaciones completamente distintas según el tamaño de
+   pantalla (ver @media más abajo de cada bloque) — no es la misma UI
+   adaptada, es un componente distinto para cada caso. Contexto completo
+   en el comentario del HTML: en mobile, animar con CSS transform muchas
+   imágenes reales distintas a la vez (32 instancias entre las dos copias
+   del carrusel) causaba un bug reproducible siempre igual — logos que se
+   cortaban o dejaban de pintarse, sin recuperarse — que no dependía del
+   peso de las imágenes (se probó bajarlas de 400×200 a 320×160 y no
+   cambió nada) sino de la cantidad de imágenes reales distintas
+   compuestas a la vez (con 16 fallaba enseguida, con 8 fallaba más
+   tarde pero seguía fallando). En vez de seguir bajando esa cantidad al
+   azar, .marcas-rotator agrupa las marcas por rubro y nunca muestra más
+   de 3 a la vez.
+
+   1) .marcas-track-wrap — carrusel infinito, sólo desktop (>=700px).
+   Mismo mecanismo que .resenas-track más abajo: .marcas-track contiene
+   dos copias idénticas del set de logos una al lado de la otra y se
+   anima corriéndose -50% de su ancho total (que es exactamente el ancho
+   de una copia), así el corte entre una vuelta y la siguiente no se
+   nota. Se pausa al pasar el mouse/foco y se desactiva con
+   prefers-reduced-motion. El desvanecido en los bordes NO usa mask-image
+   a propósito: Chrome para Android tiene bugs de renderizado conocidos
+   con mask-image sobre un elemento con una animación por transform
+   corriendo todo el tiempo. En su lugar, dos pseudo-elementos pintan un
+   degradé del color de fondo de la sección hacia transparente, encima de
+   los logos en cada punta. */
 .marcas-track-wrap {
   position: relative;
   overflow: hidden;
   margin-top: 1rem;
+}
+@media (max-width: 699px) {
+  .marcas-track-wrap { display: none; }
 }
 .marcas-track-wrap::before,
 .marcas-track-wrap::after {
@@ -743,6 +734,63 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+/* 2) .marcas-rotator — sólo mobile (<700px), ver comentario largo más
+   arriba. Agrupa las marcas por rubro (definido por el cliente) y
+   muestra un grupo a la vez con fade — mismo mecanismo que
+   .rubros-spotlight más arriba (initMarcasRotator en main.js es casi
+   calcado a initRubrosCarousel). Nunca hay más de 3 imágenes reales en
+   pantalla ni transform animándolas, así que no hay margen para el bug
+   del carrusel de arriba.
+   min-height en .marcas-rotator: mismo motivo que .rubros-spotlight-body
+   (ver comentario ahí) — los grupos tienen distinta cantidad de logos
+   (1 a 3) y a anchos angostos pueden envolver en más líneas, así que la
+   altura real varía de grupo a grupo y de celular a celular. Un valor
+   fijo en CSS dejaría hueco de más en unos casos y saltos de página en
+   otros — el valor real se mide en JS (updateMinHeight en
+   initMarcasRotator) probando los 7 grupos al ancho real de pantalla. */
+.marcas-rotator {
+  display: none;
+}
+@media (max-width: 699px) {
+  .marcas-rotator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+}
+.marcas-grupo {
+  display: none;
+  text-align: center;
+  opacity: 1;
+  transition: opacity .4s ease;
+}
+.marcas-grupo.is-active {
+  display: block;
+}
+.marcas-rotator.is-fading .marcas-grupo.is-active {
+  opacity: 0;
+}
+.marcas-grupo-label {
+  margin: 0 0 .9rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.marcas-grupo-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marcas-rotator.is-fading .marcas-grupo.is-active { opacity: 1; }
 }
 
 /* --- Nosotros --- */

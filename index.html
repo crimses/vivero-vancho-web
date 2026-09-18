@@ -299,36 +299,33 @@
   </section>
 
   <!-- =========================== MARCAS =========================== -->
-  <!-- Carrusel infinito de los logos de las marcas con las que trabaja el
-       vivero — separa visualmente Rubros de Nosotros, mismo mecanismo que
-       .resenas-track (ver sección Reseñas más abajo) y que el carrusel de
-       marcas de CRIMSES: .marcas-track contiene dos copias idénticas del
-       set de logos, una al lado de la otra, animadas con translateX(-50%)
-       en loop (CSS puro, en desktop Y en mobile — ver comentario largo en
-       styles.css sobre por qué se sacó el auto-scroll por JS que hubo ahí
-       por un tiempo) para que el corte no se note.
-       PRUEBA EN CURSO: acá van sólo 8 de las 16 marcas reales (no todas),
-       para probar si el bug de logos que se cortan/no pintan en mobile
-       tiene que ver con la CANTIDAD de imágenes reales distintas
-       animándose a la vez (32 instancias con las 16, 16 instancias con
-       8) — ver comentario largo sobre Marcas en styles.css. Si confirma
-       que se arregla, falta decidir con el cliente qué 8 marcas mostrar
-       de forma permanente (estas 8 se eligieron alternando de la lista
-       original, sin ningún criterio de cliente). Todos los logos vienen
-       ya procesados a fondo transparente y recortados/centrados en el
-       mismo lienzo (320×160px — reducido desde 400×200px, ver comentario
-       en styles.css) para que se vean con un tamaño visual parejo dentro
-       de cada tile — excepto Penn Plax y prodac (fuera de esta prueba),
-       que mantienen su tarjeta negra oficial de marca porque su isologo
-       es blanco y se volvería invisible sobre el fondo crema del sitio.
-       Sólo la primera copia queda accesible a lectores de pantalla; la
-       segunda tiene aria-hidden="true" porque es una repetición
-       "fantasma" sólo para el loop visual. Sin loading="lazy" a propósito:
-       el navegador decide cuándo cargar una imagen lazy según su posición
-       en el layout, pero acá las imágenes se mueven todo el tiempo vía CSS
-       transform (no scroll real), así que esa heurística llega tarde y el
-       logo aparece de golpe a mitad de recorrido en vez de estar ya
-       cargado. -->
+  <!-- Las marcas con las que trabaja el vivero — separa visualmente Rubros
+       de Nosotros. Dos versiones distintas según el tamaño de pantalla
+       (una se oculta por CSS, ver @media en styles.css):
+
+       - Desktop (.marcas-track-wrap, >=700px): carrusel infinito con las
+         16 marcas reales, mismo mecanismo que .resenas-track más abajo y
+         que el carrusel de CRIMSES — dos copias idénticas animadas con
+         translateX(-50%) en loop. Acá nunca hubo problemas.
+
+       - Mobile (.marcas-rotator, <700px): NO es el mismo carrusel. En
+         mobile, animar con CSS transform 16 imágenes reales distintas a
+         la vez (32 instancias entre las dos copias) causaba un bug
+         reproducible siempre igual en el celular del cliente — logos que
+         se cortaban a la mitad o dejaban de pintarse, sin recuperarse.
+         Se probó reducir el peso de los PNG (no cambió nada: el cliente
+         confirmó que el bug pasaba punto por punto igual) y reducir la
+         cantidad de marcas a la vez (de 16 a 8: el bug empezaba más
+         tarde pero seguía pasando) — la causa parece ser la cantidad de
+         imágenes reales distintas compuestas a la vez mientras algo se
+         anima, no el peso. En vez de seguir sacrificando marcas al azar,
+         .marcas-rotator las agrupa por rubro (2-3 logos por grupo, nunca
+         más) y va mostrando un grupo a la vez con fade (mismo mecanismo
+         que .rubros-spotlight más arriba: initMarcasRotator en main.js
+         es casi calcado a initRubrosCarousel). Como nunca hay más de 3
+         imágenes reales en pantalla ni transform corriendo sobre ellas,
+         evita la categoría entera de bug en vez de perseguir el límite
+         exacto. El agrupamiento por rubro lo definió el cliente. -->
   <section id="marcas" class="section">
     <div class="container">
       <div class="section-head">
@@ -341,23 +338,92 @@
       <div class="marcas-track" data-marcas-track>
         <div class="marcas-set">
           <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="Logo de Glacoxan" width="242" height="73"></div>
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="Logo de Terrafertil" width="215" height="83"></div>
           <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="Logo de Top Crop" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt="Logo de Blum S.A." width="320" height="160"></div>
           <div class="marca-logo"><img src="assets/marcas/matri.png" alt="Logo de Matri" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="Logo de Penn Plax" width="320" height="160"></div>
           <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="Logo de Claratec" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt="Logo de hth" width="320" height="160"></div>
           <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="Logo de Bremen" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="Logo de Rehau" width="320" height="160"></div>
           <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="Logo de Tetra" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="Logo de prodac" width="320" height="160"></div>
           <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="Logo de Mamboretá" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="Logo de Vamp Alquimia Natural" width="320" height="160"></div>
           <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="Logo de Bayer" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="Logo de Namaste" width="320" height="160"></div>
         </div>
         <div class="marcas-set" aria-hidden="true">
           <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/matri.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/claratec.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/bremen.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/tetra.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt=""></div>
           <div class="marca-logo"><img src="assets/marcas/bayer.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+    <div class="marcas-rotator" data-marcas-rotator>
+      <div class="marcas-grupo is-active" data-marcas-grupo>
+        <p class="marcas-grupo-label">Piletas</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt="Logo de hth" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="Logo de Claratec" width="320" height="160"></div>
+        </div>
+      </div>
+      <div class="marcas-grupo" data-marcas-grupo>
+        <p class="marcas-grupo-label">Macetas</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/matri.png" alt="Logo de Matri" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt="Logo de Blum S.A." width="320" height="160"></div>
+        </div>
+      </div>
+      <div class="marcas-grupo" data-marcas-grupo>
+        <p class="marcas-grupo-label">Grow shop</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="Logo de Namaste" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="Logo de Top Crop" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="Logo de Vamp Alquimia Natural" width="320" height="160"></div>
+        </div>
+      </div>
+      <div class="marcas-grupo" data-marcas-grupo>
+        <p class="marcas-grupo-label">Agroquímicos</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="Logo de Bayer" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="Logo de Mamboretá" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="Logo de Glacoxan" width="242" height="73"></div>
+        </div>
+      </div>
+      <div class="marcas-grupo" data-marcas-grupo>
+        <p class="marcas-grupo-label">Jardinería</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="Logo de Bremen" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="Logo de Rehau" width="320" height="160"></div>
+        </div>
+      </div>
+      <div class="marcas-grupo" data-marcas-grupo>
+        <p class="marcas-grupo-label">Tierras</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="Logo de Terrafertil" width="215" height="83"></div>
+        </div>
+      </div>
+      <div class="marcas-grupo" data-marcas-grupo>
+        <p class="marcas-grupo-label">Acuarios</p>
+        <div class="marcas-grupo-logos">
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="Logo de Penn Plax" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="Logo de Tetra" width="320" height="160"></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="Logo de prodac" width="320" height="160"></div>
         </div>
       </div>
     </div>
