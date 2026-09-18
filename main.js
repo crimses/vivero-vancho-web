@@ -231,7 +231,12 @@
     // palabra para leer, pero el cliente lo sintió "muy rápido" igual —
     // le dejamos más aire para reconocer el rubro antes de que cambie.
     var AUTOPLAY_MS = 6000;
-    var FADE_MS = 400;
+    // 500ms y con un leve translateY (ver .marcas-grupo en styles.css),
+    // más lento que los 400ms puramente de opacidad de Rubros: el
+    // cliente sintió el cambio "muy abrupto" con sólo el fade de
+    // opacidad corto — el movimiento agrega la sensación de transición
+    // en vez de un corte.
+    var FADE_MS = 500;
     var timer = null;
 
     function render(index) {

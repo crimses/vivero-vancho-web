@@ -765,13 +765,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   display: none;
   text-align: center;
   opacity: 1;
-  transition: opacity .4s ease;
+  transform: translateY(0);
+  transition: opacity .5s ease, transform .5s ease;
 }
 .marcas-grupo.is-active {
   display: block;
 }
 .marcas-rotator.is-fading .marcas-grupo.is-active {
   opacity: 0;
+  transform: translateY(8px);
 }
 /* .marcas-grupo-label lleva la clase .kicker (mismo "// trabajamos con"
    de arriba) para que la tipografía sea consistente con el resto de la
@@ -784,7 +786,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   gap: 1.5rem 2rem;
 }
 @media (prefers-reduced-motion: reduce) {
-  .marcas-rotator.is-fading .marcas-grupo.is-active { opacity: 1; }
+  .marcas-rotator.is-fading .marcas-grupo.is-active { opacity: 1; transform: none; }
 }
 
 /* --- Nosotros --- */
