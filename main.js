@@ -234,16 +234,21 @@
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) return;
 
-    var TICK_MS = 60;
-    var STEP_PX = 2; // 2px cada 60ms ≈ 33px/s, misma velocidad que el resto
-    var halfWidth = wrap.scrollWidth / 2;
-    if (!halfWidth) return;
+    var TICK_MS = 30;
+    var STEP_PX = 1; // 1px cada 30ms ≈ 33px/s, misma velocidad que el resto
+    if (!wrap.scrollWidth) return;
 
     var paused = false;
     var resumeTimer = null;
 
     function tick() {
       if (paused) return;
+      // Se vuelve a medir scrollWidth en cada paso (no se guarda una sola
+      // vez al arrancar): así, si el ancho real cambia un poco respecto
+      // a lo medido al cargar la página, el punto de "vuelta al principio"
+      // siempre coincide con la mitad real de la tira en vez de uno viejo
+      // que quedó corto o largo.
+      var halfWidth = wrap.scrollWidth / 2;
       wrap.scrollLeft += STEP_PX;
       if (wrap.scrollLeft >= halfWidth) {
         wrap.scrollLeft -= halfWidth;

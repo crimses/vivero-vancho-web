@@ -735,10 +735,14 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
      initMarcasAutoScroll en main.js) — un mecanismo de renderizado
      distinto al que fallaba. overflow-x:auto sigue habilitado para que
      el usuario pueda arrastrar la tira con el dedo en cualquier momento,
-     además del auto-scroll. */
+     además del auto-scroll. Sin -webkit-overflow-scrolling:touch a
+     propósito: esa propiedad mueve el scroll a un hilo aparte con
+     inercia propia en iOS, y pelea con los cambios de scrollLeft que
+     hace JS por su cuenta — el auto-scroll se sentía "trabado" y no
+     llegaba a completar la vuelta con ella puesta. iOS moderno ya
+     scrollea con inercia por default sin necesitarla. */
   .marcas-track-wrap {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
   /* Los degradés de los bordes (::before/::after) siguen sin mostrarse
      acá: son position:absolute + z-index encima del contenido, y como
