@@ -227,7 +227,10 @@
     });
     if (current < 0) current = 0;
 
-    var AUTOPLAY_MS = 4000;
+    // 6s (más que los 4.5s de Rubros): acá sólo hay un par de logos y una
+    // palabra para leer, pero el cliente lo sintió "muy rápido" igual —
+    // le dejamos más aire para reconocer el rubro antes de que cambie.
+    var AUTOPLAY_MS = 6000;
     var FADE_MS = 400;
     var timer = null;
 

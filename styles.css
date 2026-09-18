@@ -773,15 +773,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 .marcas-rotator.is-fading .marcas-grupo.is-active {
   opacity: 0;
 }
-.marcas-grupo-label {
-  margin: 0 0 .9rem;
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: .95rem;
-  color: var(--text-soft);
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
+/* .marcas-grupo-label lleva la clase .kicker (mismo "// trabajamos con"
+   de arriba) para que la tipografía sea consistente con el resto de la
+   página — el espaciado de acá abajo (.section .kicker) ya alcanza. */
 .marcas-grupo-logos {
   display: flex;
   justify-content: center;
