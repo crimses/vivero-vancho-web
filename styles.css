@@ -640,15 +640,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .rubros-thumb img { width: 72px; height: 72px; }
   /* min-height fijo a propósito: acá abajo de los 700px de arriba, este
      bloque no tiene una columna hermana que lo estire, así que su alto
-     depende del texto de cada rubro — probamos que se ajustara al
-     contenido de cada uno, pero aunque el cambio en sí no se viera, la
-     página igual corría todo lo de abajo (marcas, nosotros, etc.) en
-     cada ciclo del carrusel. La única forma de que nada de abajo se
-     mueva es que este bloque mida siempre lo mismo. Los textos de cada
-     rubro (ver index.html) se escribieron para que todos ocupen un largo
-     parecido; aun así el más largo ("Muebles de exterior") mide 656px a
-     320px de ancho, así que 660px cubre a todos con margen mínimo. */
-  .rubros-spotlight-body { min-height: 660px; }
+     depende del texto de cada rubro — y ese alto también depende del
+     ANCHO real de pantalla (a 320px un texto envuelve en más líneas que
+     a 400px), así que un solo valor fijo en CSS no sirve para todos los
+     celulares por igual: o sobra espacio en los más anchos, o no
+     alcanza en los más angostos. El valor real se calcula en JS
+     (updateMinHeight en main.js, dentro de initRubrosCarousel) probando
+     los 9 textos a cada ancho y quedándose con el más alto — acá sólo
+     queda un mínimo de respaldo bajo, por si JS no llegara a correr. */
+  .rubros-spotlight-body { min-height: 200px; }
 }
 
 /* --- Marcas (carrusel infinito de logos) ---
@@ -727,27 +727,30 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   object-fit: contain;
 }
 @media (max-width: 699px) {
+  /* El cliente confirmó que, con la animación CSS y los degradés de los
+     bordes sacados (versión sin nada superpuesto ni animado), los 16
+     logos se ven bien al recorrer la tira con el dedo — el bug de que
+     desaparecían quedó resuelto. Sin animación CSS, el auto-scroll ahora
+     lo maneja JS moviendo scrollLeft directamente (ver
+     initMarcasAutoScroll en main.js) — un mecanismo de renderizado
+     distinto al que fallaba. overflow-x:auto sigue habilitado para que
+     el usuario pueda arrastrar la tira con el dedo en cualquier momento,
+     además del auto-scroll. */
   .marcas-track-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  /* Sacamos también los degradés de los bordes (::before/::after) acá:
-     son position:absolute + z-index encima del contenido, y sacar
-     mask-image y la animación no alcanzó para resolver el bug de logos
-     que no se pintan en el celular (confirmado en Chrome Y Safari, dos
-     motores de renderizado distintos, con navegadores reales — no es un
-     capricho de un solo browser). Antes de seguir agregando CSS a
-     ciegas, probamos la versión más simple posible: una fila con scroll
-     nativo y nada más superpuesto. */
+  /* Los degradés de los bordes (::before/::after) siguen sin mostrarse
+     acá: son position:absolute + z-index encima del contenido, y como
+     todavía no probamos si son parte de lo que causaba el bug (se
+     sacaron junto con mask-image y la animación, los tres a la vez),
+     por las dudas los dejamos afuera en vez de arriesgarnos a traer de
+     vuelta el problema por algo puramente decorativo. */
   .marcas-track-wrap::before,
   .marcas-track-wrap::after {
     display: none;
   }
   .marcas-track { animation: none; }
-  /* La segunda tanda (aria-hidden="true") sólo existe para que la
-     animación de loop no muestre un corte — sin animación no hace falta,
-     y dejarla ocupaba el doble de scroll con logos repetidos. */
-  .marcas-set[aria-hidden="true"] { display: none; }
 }
 
 /* --- Nosotros --- */
