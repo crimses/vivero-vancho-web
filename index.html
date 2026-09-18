@@ -8,7 +8,16 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Fraunces (títulos) va con display=optional: si no llega a tiempo, la
+     página se queda con la fuente de reemplazo para esa carga en vez de
+     cambiarla después — eso es lo que causaba el "salto" al entrar desde
+     el celular con conexiones más lentas (el texto se reacomoda al pasar
+     de la fuente de reemplazo a Fraunces, que tiene métricas bien
+     distintas). Nunito Sans (texto de cuerpo) se deja en swap porque ahí
+     el cambio de fuente es mucho más sutil y preferimos que sí se vea
+     aunque tarde un poco más en llegar. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>

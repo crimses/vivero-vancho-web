@@ -507,7 +507,16 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   display: block;
 }
 
-.rubros-spotlight-body { padding: 2.75rem 1.75rem 1.75rem; }
+/* min-height fijo: en mobile (antes de los 700px de arriba) este bloque no
+   tiene una columna hermana que lo estire, así que su alto depende del
+   texto de cada rubro — y como el título y la descripción cambian mucho
+   de largo entre uno y otro ("Camping" vs. "Muebles de exterior"), cada
+   4.5s que el carrusel avanza solo el bloque se agrandaba o achicaba de
+   golpe y corría todo lo de abajo (galería, reseñas, etc.) — eso era el
+   "salto" que se sentía navegando desde el celular. 380px cubre el caso
+   más alto medido (371px a 320px de ancho, el rubro con texto más largo)
+   con un poco de margen. */
+.rubros-spotlight-body { padding: 2.75rem 1.75rem 1.75rem; min-height: 380px; }
 .rubros-spotlight-body h3 { font-size: 1.5rem; margin: 0 0 .6rem; }
 .rubros-spotlight-body p { color: var(--text-soft); margin: 0; font-size: 1.08rem; }
 
@@ -619,13 +628,32 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
    copias idénticas del set de logos una al lado de la otra y se anima
    corriéndose -50% de su ancho total (que es exactamente el ancho de una
    copia), así el corte entre una vuelta y la siguiente no se nota. Se
-   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion. */
+   pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion.
+   El desvanecido en los bordes NO usa mask-image a propósito: Chrome para
+   Android tiene un bug conocido donde un elemento con mask-image + una
+   animación por transform corriendo todo el tiempo puede, después de un
+   rato o de un scroll, dejar de pintarse por completo (el carrusel entero
+   desaparece) — es justo lo que reportó el cliente en un video desde el
+   celular. En su lugar, dos pseudo-elementos pintan un degradé del color
+   de fondo de la sección hacia transparente, encima de los logos en cada
+   punta — mismo resultado visual, sin tocar mask-image. */
 .marcas-track-wrap {
+  position: relative;
   overflow: hidden;
   margin-top: 1rem;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+.marcas-track-wrap::before,
+.marcas-track-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6%;
+  z-index: 2;
+  pointer-events: none;
+}
+.marcas-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.marcas-track-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
 .marcas-track {
   display: flex;
   width: max-content;
@@ -867,11 +895,27 @@ body.has-lightbox { overflow: hidden; }
    desplazamiento de siempre (~50px/s) ahora que el recorrido es más
    largo al haber más tarjetas por copia. */
 .resenas-track-wrap {
+  position: relative;
   overflow: hidden;
   margin-top: 2.5rem;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+/* Sin mask-image a propósito — mismo motivo que .marcas-track-wrap más
+   arriba (bug de Chrome para Android que hace desaparecer por completo un
+   elemento enmascarado con una animación por transform corriendo todo el
+   tiempo). Los pseudo-elementos logran el mismo desvanecido en los bordes
+   sin usar mask-image. */
+.resenas-track-wrap::before,
+.resenas-track-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6%;
+  z-index: 2;
+  pointer-events: none;
+}
+.resenas-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.resenas-track-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
 .resenas-track {
   display: flex;
   width: max-content;
