@@ -5,7 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vivero Vancho — Tu vivero en Moreno, hace más de 50 años</title>
 <meta name="description" content="Vivero Vancho: plantas, tierra y sustratos, macetas, muebles de exterior, decoración de jardín, camping, acuario y piscinas. Bv. Juan Domingo Perón 1232, Moreno, Buenos Aires. Más de 50 años de trayectoria.">
+<link rel="canonical" href="https://viverovancho.com/">
+<!-- Open Graph / Twitter: cómo se ve el link cuando alguien lo comparte
+     por WhatsApp, Instagram o Facebook (imagen, título y descripción de
+     la vista previa). No afecta el posicionamiento en Google, es aparte. -->
+<meta property="og:type" content="business.business">
+<meta property="og:locale" content="es_AR">
+<meta property="og:url" content="https://viverovancho.com/">
+<meta property="og:site_name" content="Vivero Vancho">
+<meta property="og:title" content="Vivero Vancho — Tu vivero en Moreno, hace más de 50 años">
+<meta property="og:description" content="Plantas, tierra y sustratos, macetas, muebles de exterior, decoración de jardín, camping, acuario y piscinas. Bv. Juan Domingo Perón 1232, Moreno, Buenos Aires.">
+<meta property="og:image" content="https://viverovancho.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- El SVG es el favicon principal (moderno, se ve nítido en cualquier
+     tamaño), pero Safari en iPhone y los resultados de Google no siempre
+     lo levantan bien — de ahí los PNG de respaldo en tamaños específicos
+     (32/16px estándar, 180px para "Agregar a inicio" en iOS). -->
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Fraunces (títulos) va con display=optional: si no llega a tiempo, la
@@ -19,6 +40,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&display=optional" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<!-- Datos estructurados (JSON-LD): le confirma a Google que esto es un
+     negocio local real, con dirección, teléfono y horarios — ayuda a que
+     aparezca bien en el "paquete local" (el bloque con el mapa) y en la
+     ficha que arma Google al lado de los resultados cuando alguien busca
+     el nombre del vivero. El rating/reviewCount son los mismos 4.8 y 336
+     que ya se muestran en la sección de Reseñas más abajo, no un dato
+     inventado — si cambian ahí, conviene actualizarlos acá también. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "GardenStore",
+  "name": "Vivero Vancho",
+  "url": "https://viverovancho.com/",
+  "image": "https://viverovancho.com/assets/og-image.jpg",
+  "telephone": "+54 9 11 3442-2750",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Bv. Juan Domingo Perón 1232",
+    "addressLocality": "Moreno",
+    "addressRegion": "Buenos Aires",
+    "addressCountry": "AR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "12:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "16:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "09:00",
+      "closes": "12:00"
+    }
+  ],
+  "sameAs": ["https://www.instagram.com/viverovancho/"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "336"
+  }
+}
+</script>
 </head>
 <body>
 
