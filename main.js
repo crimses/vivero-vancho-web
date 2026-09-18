@@ -266,9 +266,17 @@
     }
 
     wrap.addEventListener("touchstart", pause, { passive: true });
+    // touchend Y touchcancel: si el toque arranca sobre la tira pero el
+    // gesto termina siendo scroll vertical de la página (lo normal, ya
+    // que la tira vive adentro de una página que scrollea), el navegador
+    // manda touchcancel acá en vez de touchend — sin este listener
+    // quedaba pausado para siempre la primera vez que alguien scrolleaba
+    // cerca, antes incluso de llegar a verlo moverse.
     wrap.addEventListener("touchend", scheduleResume, { passive: true });
+    wrap.addEventListener("touchcancel", scheduleResume, { passive: true });
     wrap.addEventListener("pointerdown", pause);
     wrap.addEventListener("pointerup", scheduleResume);
+    wrap.addEventListener("pointercancel", scheduleResume);
 
     requestAnimationFrame(step);
   }
