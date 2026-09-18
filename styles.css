@@ -664,13 +664,18 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
    el hilo principal se siente notoriamente menos fluido que una animación
    por transform (que corre en el hilo de composición) — el cliente lo
    comparó con el carrusel de marcas de CRIMSES (mismo mecanismo que este,
-   animación CSS pura) y ese sí se ve fluido. Por eso se volvió a la
-   animación CSS también en mobile. Si el bug de logos que no pintan
-   reaparece, el próximo paso NO es volver a JS: es aligerar el peso de las
-   imágenes (los PNG de marcas están a 400×200 pero se muestran dentro de
-   un tile de 150×84 — bajarlos a su tamaño real de uso reduce bastante la
-   cantidad de píxeles que el celular tiene que mantener compuestos todo el
-   tiempo mientras se animan, sin sacrificar la fluidez de la animación).
+   animación CSS pura) y ese sí se ve fluido. Al volver a la animación CSS
+   en mobile, reapareció el bug de logos que se cortan/no pintan — a
+   diferencia de CRIMSES (que repite una sola imagen chica, un único
+   texture liviano), acá son 16 PNG reales distintos animándose a la vez,
+   32 instancias en pantalla entre las dos copias. Antes de volver a JS
+   (que ya sabemos que no queda fluido) se redujeron los PNG de 400×200 a
+   320×160 —su tamaño real de uso es un tile de 150×84, así que ya sobraba
+   resolución— para bajar la cantidad de píxeles que el celular tiene que
+   mantener compuestos todo el tiempo mientras la tira se anima. Si el bug
+   reaparece incluso así, el siguiente paso sería reducir la cantidad de
+   marcas distintas en pantalla a la vez en vez de tocar el mecanismo de
+   nuevo.
    El desvanecido en los bordes NO usa mask-image a propósito: Chrome para
    Android tiene bugs de renderizado conocidos con mask-image sobre un
    elemento con una animación por transform corriendo todo el tiempo. En
