@@ -227,7 +227,8 @@
    * con la animación CSS de siempre, que nunca dio problemas. */
   function initMarcasAutoScroll() {
     var wrap = $("[data-marcas-track-wrap]");
-    if (!wrap) return;
+    var track = $("[data-marcas-track]");
+    if (!wrap || !track) return;
     if (window.innerWidth >= 700) return;
 
     var reduceMotion = window.matchMedia &&
@@ -243,15 +244,27 @@
 
     function tick() {
       if (paused) return;
-      // Se vuelve a medir scrollWidth en cada paso (no se guarda una sola
-      // vez al arrancar): así, si el ancho real cambia un poco respecto
-      // a lo medido al cargar la página, el punto de "vuelta al principio"
-      // siempre coincide con la mitad real de la tira en vez de uno viejo
-      // que quedó corto o largo.
-      var halfWidth = wrap.scrollWidth / 2;
       wrap.scrollLeft += STEP_PX;
-      if (wrap.scrollLeft >= halfWidth) {
-        wrap.scrollLeft -= halfWidth;
+      // Reciclado de a un logo por vez, en vez de un solo salto de golpe a
+      // mitad de toda la tira: mientras el primer tile ya salió por
+      // completo del lado izquierdo (su borde derecho quedó antes de 0),
+      // se lo manda al final de la fila con appendChild y se descuenta su
+      // ancho (+ el gap que le seguía) de scrollLeft en el mismo instante.
+      // Como el tile que se recicla es visualmente idéntico al que hace de
+      // "próximo" 16 tiles más adelante (son las mismas 16 marcas
+      // repetidas), la fila sigue viéndose exactamente igual antes y
+      // después del reciclado — a diferencia de saltar la mitad de la tira
+      // entera, acá nunca hay más de ~190px de por medio, así que un salto
+      // grande que el navegador no llegara a pintar a tiempo (logos que
+      // "dejaban de aparecer" cerca del final de la vuelta) deja de ser
+      // posible.
+      var first = track.firstElementChild;
+      while (first && wrap.scrollLeft >= first.offsetLeft + first.offsetWidth) {
+        var next = first.nextElementSibling;
+        var delta = next ? next.offsetLeft - first.offsetLeft : first.offsetWidth;
+        track.appendChild(first);
+        wrap.scrollLeft -= delta;
+        first = track.firstElementChild;
       }
     }
 
