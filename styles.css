@@ -495,6 +495,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--sage);
+  /* Sin esto, la pista implícita de .rubros-spotlight-card (grid, sin
+     columnas explícitas en mobile) se dimensiona por el "min-content" más
+     ancho entre sus items — y como el título de algunos rubros trae una
+     palabra larga sin espacios ("Mantenimiento", "Decoración"), esa
+     palabra empujaba la columna más ancha de lo que el card realmente
+     mide, y esta foto (aspect-ratio 1:1, se estira para llenar la
+     columna) terminaba desbordando su propio contenedor — visible como
+     otro salto de tamaño al llegar a esos dos rubros en el carrusel. */
+  min-width: 0;
 }
 @media (min-width: 700px) {
   .rubros-spotlight-media { aspect-ratio: auto; height: 100%; min-height: 320px; }
@@ -507,16 +516,24 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   display: block;
 }
 
-/* min-height fijo: en mobile (antes de los 700px de arriba) este bloque no
-   tiene una columna hermana que lo estire, así que su alto depende del
-   texto de cada rubro — y como el título y la descripción cambian mucho
-   de largo entre uno y otro ("Camping" vs. "Muebles de exterior"), cada
-   4.5s que el carrusel avanza solo el bloque se agrandaba o achicaba de
-   golpe y corría todo lo de abajo (galería, reseñas, etc.) — eso era el
-   "salto" que se sentía navegando desde el celular. 380px cubre el caso
-   más alto medido (371px a 320px de ancho, el rubro con texto más largo)
-   con un poco de margen. */
-.rubros-spotlight-body { padding: 2.75rem 1.75rem 1.75rem; min-height: 380px; }
+/* min-height fijo a propósito: en mobile (antes de los 700px de arriba)
+   este bloque no tiene una columna hermana que lo estire, y el título +
+   descripción de cada rubro cambian mucho de largo entre uno y otro
+   ("Camping" vs. "Muebles de exterior"). Probamos que el alto se ajustara
+   al contenido de cada uno (achicando/agrandando el bloque al cambiar de
+   rubro) pero aunque el cambio en sí no se viera, la página igual corría
+   todo lo de abajo (marcas, nosotros, etc.) en cada ciclo del carrusel —
+   el problema nunca fue que SE VIERA el salto, sino que el alto de la
+   página cambiaba. La única forma de que nada de abajo se mueva es que
+   este bloque mida siempre lo mismo. 380px cubre el caso más alto medido
+   (371px a 320px de ancho, el rubro con texto más largo); display:flex +
+   justify-content:center reparte el espacio de sobra arriba y abajo del
+   texto en los rubros más cortos, en vez de dejarlo como un hueco colgando
+   debajo. */
+.rubros-spotlight-body {
+  padding: 2.75rem 1.75rem 1.75rem;
+  min-width: 0;
+}
 .rubros-spotlight-body h3 { font-size: 1.5rem; margin: 0 0 .6rem; }
 .rubros-spotlight-body p { color: var(--text-soft); margin: 0; font-size: 1.08rem; }
 
@@ -621,6 +638,26 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .rubros-spotlight-media img { padding: .9rem; }
   .rubros-thumb { width: 100px; }
   .rubros-thumb img { width: 72px; height: 72px; }
+  /* min-height fijo a propósito: acá abajo de los 700px de arriba, este
+     bloque no tiene una columna hermana que lo estire, y el título +
+     descripción de cada rubro cambian mucho de largo entre uno y otro
+     ("Camping" vs. "Muebles de exterior"). Probamos que el alto se
+     ajustara al contenido de cada uno (achicando/agrandando el bloque al
+     cambiar de rubro) pero aunque el cambio en sí no se viera, la página
+     igual corría todo lo de abajo (marcas, nosotros, etc.) en cada ciclo
+     del carrusel — el problema nunca fue que SE VIERA el salto, sino que
+     el alto de la página cambiaba. La única forma de que nada de abajo se
+     mueva es que este bloque mida siempre lo mismo. 380px cubre el caso
+     más alto medido (371px a 320px de ancho, el rubro con texto más
+     largo); display:flex + justify-content:center reparte el espacio de
+     sobra arriba y abajo del texto en los rubros más cortos, en vez de
+     dejarlo como un hueco colgando debajo. */
+  .rubros-spotlight-body {
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 /* --- Marcas (carrusel infinito de logos) ---
@@ -630,13 +667,20 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
    copia), así el corte entre una vuelta y la siguiente no se nota. Se
    pausa al pasar el mouse/foco y se desactiva con prefers-reduced-motion.
    El desvanecido en los bordes NO usa mask-image a propósito: Chrome para
-   Android tiene un bug conocido donde un elemento con mask-image + una
-   animación por transform corriendo todo el tiempo puede, después de un
-   rato o de un scroll, dejar de pintarse por completo (el carrusel entero
-   desaparece) — es justo lo que reportó el cliente en un video desde el
-   celular. En su lugar, dos pseudo-elementos pintan un degradé del color
-   de fondo de la sección hacia transparente, encima de los logos en cada
-   punta — mismo resultado visual, sin tocar mask-image. */
+   Android tiene bugs de renderizado conocidos con mask-image sobre un
+   elemento con una animación por transform corriendo todo el tiempo. En
+   su lugar, dos pseudo-elementos pintan un degradé del color de fondo de
+   la sección hacia transparente, encima de los logos en cada punta.
+   Sacar el mask-image no alcanzó: el cliente lo siguió viendo fallar en
+   el celular (algunos logos directamente no se pintaban, no solo se
+   recortaban en el borde) — mismo tipo de bug de Chrome para Android,
+   pero con la animación en sí, no con mask-image. Como no hay forma de
+   probar esto de verdad sin un Android físico, la solución robusta es
+   sacar la animación de mobile directamente (ver el media query de abajo)
+   y dejar la tira como scroll horizontal nativo (se desliza con el dedo)
+   — sin animación corriendo, no hay bug de renderizado posible. Desktop
+   sigue con el auto-scroll de siempre, porque ahí nunca se reportó el
+   problema. */
 .marcas-track-wrap {
   position: relative;
   overflow: hidden;
@@ -690,6 +734,17 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+@media (max-width: 699px) {
+  .marcas-track-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .marcas-track { animation: none; }
+  /* La segunda tanda (aria-hidden="true") sólo existe para que la
+     animación de loop no muestre un corte — sin animación no hace falta,
+     y dejarla ocupaba el doble de scroll con logos repetidos. */
+  .marcas-set[aria-hidden="true"] { display: none; }
 }
 
 /* --- Nosotros --- */
@@ -936,6 +991,20 @@ body.has-lightbox { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) {
   .resenas-track { animation: none; }
+}
+/* Mismo criterio que .marcas-track (ver comentario ahí): en mobile se saca
+   la animación y queda como scroll horizontal nativo, para no depender de
+   una animación por transform corriendo todo el tiempo — la categoría de
+   bug de renderizado de Chrome para Android que hizo fallar el carrusel
+   de marcas también podría afectar a este, aunque todavía no se haya
+   reportado acá. */
+@media (max-width: 699px) {
+  .resenas-track-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .resenas-track { animation: none; }
+  .resenas-set[aria-hidden="true"] { display: none; }
 }
 .resena-card {
   position: relative;
