@@ -300,34 +300,26 @@
 
   <!-- =========================== MARCAS =========================== -->
   <!-- Carrusel infinito de los logos de las marcas con las que trabaja el
-       vivero — separa visualmente Rubros de Nosotros. .marcas-track es una
-       sola fila plana de 32 tiles (los 16 logos reales + 16 copias
-       "fantasma" idénticas, sin agrupar en sub-contenedores) para que en
-       mobile el auto-scroll por JS pueda reciclar tiles de a uno (ver
-       initMarcasAutoScroll en main.js): cuando el primer tile ya salió por
-       completo del lado izquierdo, se lo pasa al final de la fila y se
-       descuenta su ancho de scrollLeft en el mismo instante — visualmente
-       no se nota, a diferencia de saltar de golpe la mitad de toda la tira
-       (eso fue lo que dejaba el auto-scroll "trabado" y con logos que
-       dejaban de aparecer al llegar al final). En desktop, que sigue
-       animándose con CSS puro (translateX(-50%) en loop), la fila plana no
-       cambia nada: al ser 32 tiles idénticos de a pares, la mitad del
-       ancho total sigue coincidiendo con el inicio de la segunda tanda.
+       vivero — separa visualmente Rubros de Nosotros, mismo mecanismo que
+       .resenas-track (ver sección Reseñas más abajo) y que el carrusel de
+       marcas de CRIMSES: .marcas-track contiene dos copias idénticas del
+       set de 16 logos, una al lado de la otra, animadas con
+       translateX(-50%) en loop (CSS puro, en desktop Y en mobile — ver
+       comentario largo en styles.css sobre por qué se sacó el auto-scroll
+       por JS que hubo ahí por un tiempo) para que el corte no se note.
        Todos los logos vienen ya procesados a fondo transparente y
        recortados/centrados en el mismo lienzo (400×200px) para que se vean
        con un tamaño visual parejo dentro de cada tile — excepto Penn Plax y
        prodac, que mantienen su tarjeta negra oficial de marca porque su
        isologo es blanco y se volvería invisible sobre el fondo crema del
-       sitio. Sólo la primera tanda queda accesible a lectores de pantalla;
-       la segunda tiene aria-hidden="true" en cada tile porque es una
-       repetición "fantasma" sólo para el loop visual (en mobile el orden
-       real/fantasma se va mezclando a medida que JS recicla tiles, pero da
-       igual: ambas tandas son visualmente idénticas). Sin loading="lazy" a
-       propósito: el navegador decide cuándo cargar una imagen lazy según su
-       posición en el layout, pero acá las imágenes se mueven todo el
-       tiempo (CSS transform en desktop, scrollLeft por JS en mobile), así
-       que esa heurística llega tarde y el logo aparece de golpe a mitad de
-       recorrido en vez de estar ya cargado. -->
+       sitio. Sólo la primera copia queda accesible a lectores de pantalla;
+       la segunda tiene aria-hidden="true" porque es una repetición
+       "fantasma" sólo para el loop visual. Sin loading="lazy" a propósito:
+       el navegador decide cuándo cargar una imagen lazy según su posición
+       en el layout, pero acá las imágenes se mueven todo el tiempo vía CSS
+       transform (no scroll real), así que esa heurística llega tarde y el
+       logo aparece de golpe a mitad de recorrido en vez de estar ya
+       cargado. -->
   <section id="marcas" class="section">
     <div class="container">
       <div class="section-head">
@@ -338,38 +330,42 @@
     </div>
     <div class="marcas-track-wrap" data-marcas-track-wrap>
       <div class="marcas-track" data-marcas-track>
-        <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="Logo de Glacoxan" width="242" height="73"></div>
-        <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="Logo de Terrafertil" width="215" height="83"></div>
-        <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="Logo de Top Crop" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/blum.png" alt="Logo de Blum S.A." width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/matri.png" alt="Logo de Matri" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="Logo de Penn Plax" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="Logo de Claratec" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/hth.png" alt="Logo de hth" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="Logo de Bremen" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="Logo de Rehau" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="Logo de Tetra" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="Logo de prodac" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="Logo de Mamboretá" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="Logo de Vamp Alquimia Natural" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="Logo de Bayer" width="400" height="200"></div>
-        <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="Logo de Namaste" width="400" height="200"></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/glacoxan.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/terrafertil.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/topcrop.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/blum.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/matri.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/pennplax.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/claratec.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/hth.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/bremen.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/rehau.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/tetra.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/prodac.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/mamboreta.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/vamp.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/bayer.png" alt=""></div>
-        <div class="marca-logo" aria-hidden="true"><img src="assets/marcas/namaste.png" alt=""></div>
+        <div class="marcas-set">
+          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt="Logo de Glacoxan" width="242" height="73"></div>
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt="Logo de Terrafertil" width="215" height="83"></div>
+          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt="Logo de Top Crop" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt="Logo de Blum S.A." width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/matri.png" alt="Logo de Matri" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt="Logo de Penn Plax" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt="Logo de Claratec" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt="Logo de hth" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt="Logo de Bremen" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt="Logo de Rehau" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt="Logo de Tetra" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt="Logo de prodac" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt="Logo de Mamboretá" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt="Logo de Vamp Alquimia Natural" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt="Logo de Bayer" width="400" height="200"></div>
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt="Logo de Namaste" width="400" height="200"></div>
+        </div>
+        <div class="marcas-set" aria-hidden="true">
+          <div class="marca-logo"><img src="assets/marcas/glacoxan.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/terrafertil.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/topcrop.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/blum.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/matri.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/pennplax.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/claratec.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/hth.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/bremen.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/rehau.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/tetra.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/prodac.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/mamboreta.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/vamp.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/bayer.png" alt=""></div>
+          <div class="marca-logo"><img src="assets/marcas/namaste.png" alt=""></div>
+        </div>
       </div>
     </div>
   </section>

@@ -202,92 +202,6 @@
   }
 
   /* ---------------------------------------------------------------
-   * Marcas — auto-scroll en mobile con JS (scrollLeft nativo) en vez de
-   * la animación por CSS transform que usa desktop. En mobile, sacar
-   * mask-image y la animación CSS (ver comentarios en styles.css) no
-   * alcanzó para resolver un bug real de logos que dejaban de pintarse
-   * en el celular (confirmado en Chrome y Safari, en dos dispositivos
-   * distintos) — sólo se resolvió sacando la animación por completo.
-   * Como el cliente prefiere que el carrusel se mueva solo, esto repone
-   * el auto-scroll con un mecanismo distinto de raíz: en vez de animar
-   * un transform con CSS, movemos el scroll nativo (scrollLeft) a mano.
-   * Usa setInterval (no requestAnimationFrame): es el mismo mecanismo
-   * que ya usa el autoplay de Rubros más arriba, con el que sabemos que
-   * no hay problemas — una primera versión con requestAnimationFrame no
-   * se movía nada en el celular real, así que se cambió a algo ya
-   * probado en este mismo sitio en vez de seguir con lo que fallaba. El
-   * salto al reiniciar el loop es instantáneo (scrollLeft -= la mitad
-   * del ancho total, que es el ancho de una tanda) en vez de una
-   * transición, para que no se note el corte — mismo truco que usaba la
-   * animación CSS. Se pausa mientras el usuario toca/arrastra la tira
-   * (touchcancel Y touchend, porque el caso normal es que alguien la
-   * toque de pasada al scrollear la página — un gesto que termina en
-   * scroll vertical dispara touchcancel, no touchend), y no corre nada
-   * si el sistema pide prefers-reduced-motion. Desktop no se toca: sigue
-   * con la animación CSS de siempre, que nunca dio problemas. */
-  function initMarcasAutoScroll() {
-    var wrap = $("[data-marcas-track-wrap]");
-    var track = $("[data-marcas-track]");
-    if (!wrap || !track) return;
-    if (window.innerWidth >= 700) return;
-
-    var reduceMotion = window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return;
-
-    var TICK_MS = 30;
-    var STEP_PX = 1; // 1px cada 30ms ≈ 33px/s, misma velocidad que el resto
-    if (!wrap.scrollWidth) return;
-
-    var paused = false;
-    var resumeTimer = null;
-
-    function tick() {
-      if (paused) return;
-      wrap.scrollLeft += STEP_PX;
-      // Reciclado de a un logo por vez, en vez de un solo salto de golpe a
-      // mitad de toda la tira: mientras el primer tile ya salió por
-      // completo del lado izquierdo (su borde derecho quedó antes de 0),
-      // se lo manda al final de la fila con appendChild y se descuenta su
-      // ancho (+ el gap que le seguía) de scrollLeft en el mismo instante.
-      // Como el tile que se recicla es visualmente idéntico al que hace de
-      // "próximo" 16 tiles más adelante (son las mismas 16 marcas
-      // repetidas), la fila sigue viéndose exactamente igual antes y
-      // después del reciclado — a diferencia de saltar la mitad de la tira
-      // entera, acá nunca hay más de ~190px de por medio, así que un salto
-      // grande que el navegador no llegara a pintar a tiempo (logos que
-      // "dejaban de aparecer" cerca del final de la vuelta) deja de ser
-      // posible.
-      var first = track.firstElementChild;
-      while (first && wrap.scrollLeft >= first.offsetLeft + first.offsetWidth) {
-        var next = first.nextElementSibling;
-        var delta = next ? next.offsetLeft - first.offsetLeft : first.offsetWidth;
-        track.appendChild(first);
-        wrap.scrollLeft -= delta;
-        first = track.firstElementChild;
-      }
-    }
-
-    function pause() {
-      paused = true;
-      clearTimeout(resumeTimer);
-    }
-    function scheduleResume() {
-      clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(function () { paused = false; }, 2500);
-    }
-
-    wrap.addEventListener("touchstart", pause, { passive: true });
-    wrap.addEventListener("touchend", scheduleResume, { passive: true });
-    wrap.addEventListener("touchcancel", scheduleResume, { passive: true });
-    wrap.addEventListener("pointerdown", pause);
-    wrap.addEventListener("pointerup", scheduleResume);
-    wrap.addEventListener("pointercancel", scheduleResume);
-
-    setInterval(tick, TICK_MS);
-  }
-
-  /* ---------------------------------------------------------------
    * Nuestro mundo — galería con "burbuja" en hover/focus (efecto CSS
    * puro, ver .galeria-item:hover en styles.css) y lightbox al clickear
    * o tocar una foto, para verla más grande. El lightbox es un único
@@ -363,7 +277,6 @@
     safe(initFooterYear, "initFooterYear");
     safe(initNav, "initNav");
     safe(initRubrosCarousel, "initRubrosCarousel");
-    safe(initMarcasAutoScroll, "initMarcasAutoScroll");
     safe(initGaleriaLightbox, "initGaleriaLightbox");
     document.documentElement.classList.add("is-ready");
   }
