@@ -738,46 +738,48 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
 
 /* 2) .marcas-rotator — sólo mobile (<700px), ver comentario largo más
    arriba. Agrupa las marcas por rubro (definido por el cliente) y
-   muestra un grupo a la vez con fade — mismo mecanismo que
-   .rubros-spotlight más arriba (initMarcasRotator en main.js es casi
-   calcado a initRubrosCarousel). Nunca hay más de 3 imágenes reales en
-   pantalla ni transform animándolas, así que no hay margen para el bug
-   del carrusel de arriba.
-   min-height en .marcas-rotator: mismo motivo que .rubros-spotlight-body
-   (ver comentario ahí) — los grupos tienen distinta cantidad de logos
-   (1 a 3) y a anchos angostos pueden envolver en más líneas, así que la
-   altura real varía de grupo a grupo y de celular a celular. Un valor
-   fijo en CSS dejaría hueco de más en unos casos y saltos de página en
-   otros — el valor real se mide en JS (updateMinHeight en
-   initMarcasRotator) probando los 7 grupos al ancho real de pantalla. */
+   muestra un grupo a la vez con un crossfade — mismo efecto "crece" que
+   .rubros-spotlight-media img (scale + opacity), calcado a pedido del
+   cliente. Nunca hay más de 3 imágenes reales en pantalla ni transform
+   animándolas, así que no hay margen para el bug del carrusel de arriba.
+
+   A diferencia de .rubros-spotlight (que reusa un único elemento y le
+   cambia el contenido), acá hay 7 grupos ya armados en el HTML. La
+   primera versión los mostraba/ocultaba con display:none↔block al
+   activarse — eso ROMPE la transición de entrada: un elemento no puede
+   animar una propiedad en el mismo instante en que pasa a existir en el
+   render tree, así que el fade-in nunca se veía (el cliente lo notó:
+   "aparece de golpe"). La solución de fondo, no un parche, es que los 7
+   grupos estén SIEMPRE en el render tree, apilados unos sobre otros en
+   la misma celda de grid (grid-area: 1/1), y que sólo la opacidad decida
+   cuál se ve — así todos tienen dónde "partir" para animar en cualquier
+   dirección, en cualquier momento. De paso, esto resuelve solo el
+   min-height que antes había que medir en JS: al estar los 7 grupos
+   siempre presentes compartiendo la misma fila del grid, esa fila mide
+   automáticamente lo que mida el más alto de los 7, sin necesidad de
+   JS. */
 .marcas-rotator {
   display: none;
 }
 @media (max-width: 699px) {
   .marcas-rotator {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
     margin-top: 1.5rem;
   }
 }
-/* Los logos son imágenes, no texto — el efecto que se busca calcar acá
-   es el de .rubros-spotlight-media img (que "crece" con scale), no el
-   de .rubros-spotlight-body (que se desliza con translateY). Mismos
-   valores que ese, a propósito. */
 .marcas-grupo {
-  display: none;
+  grid-area: 1 / 1;
+  align-self: center;
   text-align: center;
-  opacity: 1;
-  transform: scale(1);
+  opacity: 0;
+  transform: scale(.94);
+  pointer-events: none;
   transition: opacity .4s ease, transform .45s ease;
 }
 .marcas-grupo.is-active {
-  display: block;
-}
-.marcas-rotator.is-fading .marcas-grupo.is-active {
-  opacity: 0;
-  transform: scale(.94);
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
 }
 /* .marcas-grupo-label lleva la clase .kicker (mismo "// trabajamos con"
    de arriba) para que la tipografía sea consistente con el resto de la
@@ -790,7 +792,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   gap: 1.5rem 2rem;
 }
 @media (prefers-reduced-motion: reduce) {
-  .marcas-rotator.is-fading .marcas-grupo.is-active { opacity: 1; transform: none; }
+  .marcas-grupo { transition: none; }
 }
 
 /* --- Nosotros --- */

@@ -202,15 +202,25 @@
   }
 
   /* ---------------------------------------------------------------
-   * Marcas en mobile — rotador por rubro, calcado a initRubrosCarousel
-   * de acá arriba (mismo patrón: fade + setInterval + updateMinHeight
-   * responsive al ancho real). Ver el comentario largo sobre Marcas en
-   * el HTML y en styles.css: animar con CSS transform muchas imágenes
-   * reales distintas a la vez rompía en el celular del cliente sin
-   * importar el peso de las imágenes, así que en mobile se reemplaza el
-   * carrusel por este rotador — agrupa las marcas por rubro y nunca
+   * Marcas en mobile — rotador por rubro. Ver el comentario largo sobre
+   * Marcas en el HTML y en styles.css: animar con CSS transform muchas
+   * imágenes reales distintas a la vez rompía en el celular del cliente
+   * sin importar el peso de las imágenes, así que en mobile se reemplaza
+   * el carrusel por este rotador — agrupa las marcas por rubro y nunca
    * muestra más de 3 imágenes reales a la vez, sin ningún transform
-   * animándolas (sólo un fade de opacidad entre grupos).
+   * animándolas (sólo un crossfade de opacidad entre grupos).
+   *
+   * A diferencia de initRubrosCarousel de acá arriba, esto NO necesita
+   * el patrón "agregar clase is-fading, esperar, recién ahí cambiar el
+   * contenido": ese patrón existe para poder cambiar CONTENIDO a mitad
+   * de la transición sin que se note (Rubros reusa un único elemento).
+   * Acá los 7 grupos ya existen de antemano en el HTML y están siempre
+   * en el render tree — activar uno y desactivar otro es un solo cambio
+   * de clase, y el crossfade lo resuelve el transition de CSS solo (ver
+   * .marcas-grupo en styles.css). Una primera versión sí usaba
+   * display:none/block por grupo (como Rubros con su contenido), pero
+   * un elemento no puede animar una propiedad en el mismo instante en
+   * que pasa a existir en el render tree — el fade-in nunca se veía.
    * --------------------------------------------------------------- */
   function initMarcasRotator() {
     var root = $("[data-marcas-rotator]");
@@ -231,16 +241,13 @@
     // palabra para leer, pero el cliente lo sintió "muy rápido" igual —
     // le dejamos más aire para reconocer el rubro antes de que cambie.
     var AUTOPLAY_MS = 6000;
-    // 400ms, igual que Rubros — mismo efecto que pidió el cliente: fade +
-    // scale, calcado a .rubros-spotlight-media img (ver .marcas-grupo en
-    // styles.css), no al translateY de .rubros-spotlight-body — acá lo
-    // que cambia son logos (imágenes), no texto.
-    var FADE_MS = 400;
     var timer = null;
 
     function render(index) {
       groups.forEach(function (g, i) {
-        g.classList.toggle("is-active", i === index);
+        var active = i === index;
+        g.classList.toggle("is-active", active);
+        g.setAttribute("aria-hidden", active ? "false" : "true");
       });
     }
 
@@ -248,38 +255,7 @@
       index = ((index % groups.length) + groups.length) % groups.length;
       if (index === current) return;
       current = index;
-
-      if (reduceMotion) {
-        render(index);
-        return;
-      }
-
-      root.classList.add("is-fading");
-      setTimeout(function () {
-        render(index);
-        root.classList.remove("is-fading");
-      }, FADE_MS);
-    }
-
-    // Mismo motivo que updateMinHeight en initRubrosCarousel más arriba:
-    // los grupos tienen distinta cantidad de logos (1 a 3) y a anchos
-    // angostos pueden envolver en más líneas, así que la altura real
-    // varía de grupo a grupo y de celular a celular — se mide acá en vez
-    // de fijar un valor en CSS para que nunca sobre ni falte espacio.
-    function updateMinHeight() {
-      if (window.innerWidth >= 700) {
-        root.style.minHeight = "";
-        return;
-      }
-      root.style.minHeight = "0";
-      var max = 0;
-      groups.forEach(function (g) {
-        var wasActive = g.classList.contains("is-active");
-        if (!wasActive) g.classList.add("is-active");
-        if (g.scrollHeight > max) max = g.scrollHeight;
-        if (!wasActive) g.classList.remove("is-active");
-      });
-      root.style.minHeight = max + "px";
+      render(index);
     }
 
     function stopAutoplay() {
@@ -295,18 +271,12 @@
       }, AUTOPLAY_MS);
     }
 
-    var resizeTimer = null;
     window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        updateMinHeight();
-        if (window.innerWidth >= 700) stopAutoplay();
-        else startAutoplay();
-      }, 150);
+      if (window.innerWidth >= 700) stopAutoplay();
+      else startAutoplay();
     });
 
     render(current);
-    updateMinHeight();
     startAutoplay();
   }
 
