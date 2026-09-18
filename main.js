@@ -210,19 +210,21 @@
    * distintos) — sólo se resolvió sacando la animación por completo.
    * Como el cliente prefiere que el carrusel se mueva solo, esto repone
    * el auto-scroll con un mecanismo distinto de raíz: en vez de animar
-   * un transform con CSS, movemos el scroll nativo (scrollLeft) a mano
-   * con requestAnimationFrame. Es la misma idea que arrastrar la tira
-   * con el dedo, sólo que automático — un camino de renderizado
-   * completamente distinto al que fallaba, así que no debería heredar
-   * el mismo bug (no hay forma de confirmarlo sin probarlo en el
-   * celular real, pero es la apuesta más razonable después de agotar
-   * los ajustes de CSS). El salto al reiniciar el loop es instantáneo
-   * (scrollLeft -= la mitad del ancho total, que es el ancho de una
-   * tanda) en vez de una transición, para que no se note el corte —
-   * mismo truco que usaba la animación CSS. Se pausa mientras el
-   * usuario toca/arrastra la tira, y no corre nada si el sistema pide
-   * prefers-reduced-motion. Desktop no se toca: sigue con la animación
-   * CSS de siempre, que nunca dio problemas. */
+   * un transform con CSS, movemos el scroll nativo (scrollLeft) a mano.
+   * Usa setInterval (no requestAnimationFrame): es el mismo mecanismo
+   * que ya usa el autoplay de Rubros más arriba, con el que sabemos que
+   * no hay problemas — una primera versión con requestAnimationFrame no
+   * se movía nada en el celular real, así que se cambió a algo ya
+   * probado en este mismo sitio en vez de seguir con lo que fallaba. El
+   * salto al reiniciar el loop es instantáneo (scrollLeft -= la mitad
+   * del ancho total, que es el ancho de una tanda) en vez de una
+   * transición, para que no se note el corte — mismo truco que usaba la
+   * animación CSS. Se pausa mientras el usuario toca/arrastra la tira
+   * (touchcancel Y touchend, porque el caso normal es que alguien la
+   * toque de pasada al scrollear la página — un gesto que termina en
+   * scroll vertical dispara touchcancel, no touchend), y no corre nada
+   * si el sistema pide prefers-reduced-motion. Desktop no se toca: sigue
+   * con la animación CSS de siempre, que nunca dio problemas. */
   function initMarcasAutoScroll() {
     var wrap = $("[data-marcas-track-wrap]");
     if (!wrap) return;
@@ -232,28 +234,20 @@
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) return;
 
-    var SPEED = 33; // px/s — misma velocidad que el resto de los carruseles
+    var TICK_MS = 60;
+    var STEP_PX = 2; // 2px cada 60ms ≈ 33px/s, misma velocidad que el resto
     var halfWidth = wrap.scrollWidth / 2;
     if (!halfWidth) return;
 
     var paused = false;
-    var lastTs = null;
     var resumeTimer = null;
 
-    function step(ts) {
-      if (!paused) {
-        if (lastTs !== null) {
-          var dt = (ts - lastTs) / 1000;
-          wrap.scrollLeft += SPEED * dt;
-          if (wrap.scrollLeft >= halfWidth) {
-            wrap.scrollLeft -= halfWidth;
-          }
-        }
-        lastTs = ts;
-      } else {
-        lastTs = null;
+    function tick() {
+      if (paused) return;
+      wrap.scrollLeft += STEP_PX;
+      if (wrap.scrollLeft >= halfWidth) {
+        wrap.scrollLeft -= halfWidth;
       }
-      requestAnimationFrame(step);
     }
 
     function pause() {
@@ -266,19 +260,13 @@
     }
 
     wrap.addEventListener("touchstart", pause, { passive: true });
-    // touchend Y touchcancel: si el toque arranca sobre la tira pero el
-    // gesto termina siendo scroll vertical de la página (lo normal, ya
-    // que la tira vive adentro de una página que scrollea), el navegador
-    // manda touchcancel acá en vez de touchend — sin este listener
-    // quedaba pausado para siempre la primera vez que alguien scrolleaba
-    // cerca, antes incluso de llegar a verlo moverse.
     wrap.addEventListener("touchend", scheduleResume, { passive: true });
     wrap.addEventListener("touchcancel", scheduleResume, { passive: true });
     wrap.addEventListener("pointerdown", pause);
     wrap.addEventListener("pointerup", scheduleResume);
     wrap.addEventListener("pointercancel", scheduleResume);
 
-    requestAnimationFrame(step);
+    setInterval(tick, TICK_MS);
   }
 
   /* ---------------------------------------------------------------
