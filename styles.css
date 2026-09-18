@@ -639,25 +639,16 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .rubros-thumb { width: 100px; }
   .rubros-thumb img { width: 72px; height: 72px; }
   /* min-height fijo a propósito: acá abajo de los 700px de arriba, este
-     bloque no tiene una columna hermana que lo estire, y el título +
-     descripción de cada rubro cambian mucho de largo entre uno y otro
-     ("Camping" vs. "Muebles de exterior"). Probamos que el alto se
-     ajustara al contenido de cada uno (achicando/agrandando el bloque al
-     cambiar de rubro) pero aunque el cambio en sí no se viera, la página
-     igual corría todo lo de abajo (marcas, nosotros, etc.) en cada ciclo
-     del carrusel — el problema nunca fue que SE VIERA el salto, sino que
-     el alto de la página cambiaba. La única forma de que nada de abajo se
-     mueva es que este bloque mida siempre lo mismo. 380px cubre el caso
-     más alto medido (371px a 320px de ancho, el rubro con texto más
-     largo); display:flex + justify-content:center reparte el espacio de
-     sobra arriba y abajo del texto en los rubros más cortos, en vez de
-     dejarlo como un hueco colgando debajo. */
-  .rubros-spotlight-body {
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+     bloque no tiene una columna hermana que lo estire, así que su alto
+     depende del texto de cada rubro — probamos que se ajustara al
+     contenido de cada uno, pero aunque el cambio en sí no se viera, la
+     página igual corría todo lo de abajo (marcas, nosotros, etc.) en
+     cada ciclo del carrusel. La única forma de que nada de abajo se
+     mueva es que este bloque mida siempre lo mismo. Los textos de cada
+     rubro (ver index.html) se escribieron para que todos ocupen un largo
+     parecido; aun así el más largo ("Muebles de exterior") mide 656px a
+     320px de ancho, así que 660px cubre a todos con margen mínimo. */
+  .rubros-spotlight-body { min-height: 660px; }
 }
 
 /* --- Marcas (carrusel infinito de logos) ---
@@ -739,6 +730,18 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
   .marcas-track-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+  /* Sacamos también los degradés de los bordes (::before/::after) acá:
+     son position:absolute + z-index encima del contenido, y sacar
+     mask-image y la animación no alcanzó para resolver el bug de logos
+     que no se pintan en el celular (confirmado en Chrome Y Safari, dos
+     motores de renderizado distintos, con navegadores reales — no es un
+     capricho de un solo browser). Antes de seguir agregando CSS a
+     ciegas, probamos la versión más simple posible: una fila con scroll
+     nativo y nada más superpuesto. */
+  .marcas-track-wrap::before,
+  .marcas-track-wrap::after {
+    display: none;
   }
   .marcas-track { animation: none; }
   /* La segunda tanda (aria-hidden="true") sólo existe para que la
@@ -993,15 +996,17 @@ body.has-lightbox { overflow: hidden; }
   .resenas-track { animation: none; }
 }
 /* Mismo criterio que .marcas-track (ver comentario ahí): en mobile se saca
-   la animación y queda como scroll horizontal nativo, para no depender de
-   una animación por transform corriendo todo el tiempo — la categoría de
-   bug de renderizado de Chrome para Android que hizo fallar el carrusel
-   de marcas también podría afectar a este, aunque todavía no se haya
-   reportado acá. */
+   la animación y los degradés de los bordes, y queda como scroll
+   horizontal nativo y nada más — todavía no se reportó ningún problema
+   acá, pero usa el mismo mecanismo que marcas, que sí falló. */
 @media (max-width: 699px) {
   .resenas-track-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+  .resenas-track-wrap::before,
+  .resenas-track-wrap::after {
+    display: none;
   }
   .resenas-track { animation: none; }
   .resenas-set[aria-hidden="true"] { display: none; }
