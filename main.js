@@ -231,8 +231,10 @@
     // palabra para leer, pero el cliente lo sintió "muy rápido" igual —
     // le dejamos más aire para reconocer el rubro antes de que cambie.
     var AUTOPLAY_MS = 6000;
-    // 400ms, igual que Rubros — el cliente pidió el mismo efecto (fade +
-    // leve translateY, ver .marcas-grupo en styles.css).
+    // 400ms, igual que Rubros — mismo efecto que pidió el cliente: fade +
+    // scale, calcado a .rubros-spotlight-media img (ver .marcas-grupo en
+    // styles.css), no al translateY de .rubros-spotlight-body — acá lo
+    // que cambia son logos (imágenes), no texto.
     var FADE_MS = 400;
     var timer = null;
 

@@ -761,22 +761,23 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; }
     margin-top: 1.5rem;
   }
 }
-/* Mismos valores que .rubros-spotlight-body/.is-fading más arriba, a
-   propósito — el cliente pidió el mismo efecto que el carrusel de
-   Rubros. */
+/* Los logos son imágenes, no texto — el efecto que se busca calcar acá
+   es el de .rubros-spotlight-media img (que "crece" con scale), no el
+   de .rubros-spotlight-body (que se desliza con translateY). Mismos
+   valores que ese, a propósito. */
 .marcas-grupo {
   display: none;
   text-align: center;
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity .4s ease, transform .4s ease;
+  transform: scale(1);
+  transition: opacity .4s ease, transform .45s ease;
 }
 .marcas-grupo.is-active {
   display: block;
 }
 .marcas-rotator.is-fading .marcas-grupo.is-active {
   opacity: 0;
-  transform: translateY(10px);
+  transform: scale(.94);
 }
 /* .marcas-grupo-label lleva la clase .kicker (mismo "// trabajamos con"
    de arriba) para que la tipografía sea consistente con el resto de la
